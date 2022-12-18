@@ -14,17 +14,17 @@ This script is meant to be operated directly from CLI; all options are specified
 
 ### ECDSA Generation
 ```shell
-./tcra.sh <input-file> ecdsa
+$ ./tcra.sh <input-file> ecdsa
 ```
 
 ### ECDH Generation
 ```shell
-./tcra.sh <input-file> ecdh
+$ ./tcra.sh <input-file> ecdh
 ```
 
 ### RSA Generation
 ```shell
-./tcra.sh <input-file> rsa
+$ ./tcra.sh <input-file> rsa
 ```
 
 ## License & Credits
