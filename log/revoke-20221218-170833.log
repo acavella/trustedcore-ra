@@ -1,0 +1,36 @@
+[2022-12-18 17:08:33] [info]  Trusted Core: RA v0.0.1 started
+[2022-12-18 17:08:33] [info] Configuration file loaded sucessfully, /home/acavella/github/trustedcore-ra/conf/tcra.conf
+[2022-12-18 17:08:33] [info] Reading input file to memory, input/test.txt
+[2022-12-18 17:08:33] [info] Completed reading input file, 54 bytes, input/test.txt
+[2022-12-18 17:08:33] [info] Generating private key and csr for each subject
+[2022-12-18 17:08:33] [info] Creating directory
+[2022-12-18 17:08:33] [info] Directory created, /home/acavella/github/trustedcore-ra/output/V2BDF94D83
+[2022-12-18 17:08:33] [info] Generating private key for V2BDF94D83
+[2022-12-18 17:08:33] [info] Private key generated, V2BDF94D83.key
+[2022-12-18 17:08:33] [info] Generating PKCS#10 CSR for V2BDF94D83
+[2022-12-18 17:08:33] [info] PKCS#10 CSR generated, V2BDF94D83.csr
+[2022-12-18 17:08:33] [info] Creating directory
+[2022-12-18 17:08:33] [info] Directory created, /home/acavella/github/trustedcore-ra/output/8EXEFN002D
+[2022-12-18 17:08:33] [info] Generating private key for 8EXEFN002D
+[2022-12-18 17:08:33] [info] Private key generated, 8EXEFN002D.key
+[2022-12-18 17:08:33] [info] Generating PKCS#10 CSR for 8EXEFN002D
+[2022-12-18 17:08:33] [info] PKCS#10 CSR generated, 8EXEFN002D.csr
+[2022-12-18 17:08:33] [info] Creating directory
+[2022-12-18 17:08:33] [info] Directory created, /home/acavella/github/trustedcore-ra/output/EDVGR8YSVU
+[2022-12-18 17:08:33] [info] Generating private key for EDVGR8YSVU
+[2022-12-18 17:08:33] [info] Private key generated, EDVGR8YSVU.key
+[2022-12-18 17:08:33] [info] Generating PKCS#10 CSR for EDVGR8YSVU
+[2022-12-18 17:08:33] [info] PKCS#10 CSR generated, EDVGR8YSVU.csr
+[2022-12-18 17:08:33] [info] Creating directory
+[2022-12-18 17:08:33] [info] Directory created, /home/acavella/github/trustedcore-ra/output/TBETCTEA7F
+[2022-12-18 17:08:33] [info] Generating private key for TBETCTEA7F
+[2022-12-18 17:08:33] [info] Private key generated, TBETCTEA7F.key
+[2022-12-18 17:08:33] [info] Generating PKCS#10 CSR for TBETCTEA7F
+[2022-12-18 17:08:33] [info] PKCS#10 CSR generated, TBETCTEA7F.csr
+[2022-12-18 17:08:33] [info] Creating directory
+[2022-12-18 17:08:33] [info] Directory created, /home/acavella/github/trustedcore-ra/output/QPJSGAIPW3
+[2022-12-18 17:08:33] [info] Generating private key for QPJSGAIPW3
+[2022-12-18 17:08:33] [info] Private key generated, QPJSGAIPW3.key
+[2022-12-18 17:08:33] [info] Generating PKCS#10 CSR for QPJSGAIPW3
+[2022-12-18 17:08:33] [info] PKCS#10 CSR generated, QPJSGAIPW3.csr
+[2022-12-18 17:08:33] [info] Completed generating 5 private key and csr pairs

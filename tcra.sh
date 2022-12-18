@@ -49,6 +49,7 @@ gen_ecdsa_csr() {
         local outputdir="${__dir}/output/${i}"
         local csr="${outputdir}/${i}.csr"
         local pkey="${outputdir}/${i}.key"
+        local p7b="${outputdir}/${i}.p7b"
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Creating directory" >> $log
         mkdir ${outputdir}
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Directory created, ${outputdir}" >> $log
@@ -60,6 +61,11 @@ gen_ecdsa_csr() {
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#10 CSR for ${i}" >> $log
         openssl req -new -key "${outputdir}/${i}.key" -nodes -out ${csr} -sha384 -subj "/CN=${i}/" -config "${__conf}/ecdsa.cnf"
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#10 CSR generated, ${i}.csr" >> $log
+
+        local tempreq=$(mktemp /tmp/temp.XXXXXXXXX)
+        local p10request=$(sed -e '2,$!d' -e '$d' ${csr})
+        echo "action=enrollKey&ca=${ecdsaprofile}&request=${p10request}" > ${tempreq}
+        curl ${caecc} --cert ${clientcert} -v -o ${p7b} --cacert ${cacert} --data-binary @${tempreq} --tlsv1.2
 
         counter=$(( counter + 1 ))
     done
