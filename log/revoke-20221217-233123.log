@@ -1,0 +1,5 @@
+[2022-12-17 23:31:23] [info]  Trusted Core: RA v0.0.1 started
+[2022-12-17 23:31:23] [info] Configuration file loaded sucessfully, /home/acavella/github/trustedcore-ra/conf/tcra.conf
+[2022-12-17 23:31:23] [info] Reading input file to memory, input/test.txt
+[2022-12-17 23:31:23] [info] Completed reading input file, 43 bytes, input/test.txt
+[2022-12-17 23:31:23] [info] Generating private key and csr for each subject

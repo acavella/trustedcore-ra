@@ -1,0 +1,22 @@
+[2022-12-17 23:44:17] [info]  Trusted Core: RA v0.0.1 started
+[2022-12-17 23:44:17] [info] Configuration file loaded sucessfully, /home/acavella/github/trustedcore-ra/conf/tcra.conf
+[2022-12-17 23:44:17] [info] Reading input file to memory, input/test.txt
+[2022-12-17 23:44:17] [info] Completed reading input file, 43 bytes, input/test.txt
+[2022-12-17 23:44:17] [info] Generating private key and csr for each subject
+[2022-12-17 23:44:17] [info] Creating directory
+[2022-12-17 23:44:17] [info] Directory created, /home/acavella/github/trustedcore-ra/output/R58SKE32LF
+[2022-12-17 23:44:17] [info] Generating private key for R58SKE32LF
+[2022-12-17 23:44:17] [info] Generating private key for R58SKE32LF-pkey.pem
+[2022-12-17 23:44:17] [info] Creating directory
+[2022-12-17 23:44:17] [info] Directory created, /home/acavella/github/trustedcore-ra/output/R58SKE32LK
+[2022-12-17 23:44:17] [info] Generating private key for R58SKE32LK
+[2022-12-17 23:44:17] [info] Generating private key for R58SKE32LK-pkey.pem
+[2022-12-17 23:44:17] [info] Creating directory
+[2022-12-17 23:44:17] [info] Directory created, /home/acavella/github/trustedcore-ra/output/R58SKE32LG
+[2022-12-17 23:44:17] [info] Generating private key for R58SKE32LG
+[2022-12-17 23:44:17] [info] Generating private key for R58SKE32LG-pkey.pem
+[2022-12-17 23:44:17] [info] Creating directory
+[2022-12-17 23:44:17] [info] Directory created, /home/acavella/github/trustedcore-ra/output/R58SKE32LH
+[2022-12-17 23:44:17] [info] Generating private key for R58SKE32LH
+[2022-12-17 23:44:17] [info] Generating private key for R58SKE32LH-pkey.pem
+[2022-12-17 23:44:17] [info] Completed generating 4 private keys and csr

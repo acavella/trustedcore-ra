@@ -1,0 +1,10 @@
+[2022-12-18 00:47:18] [info]  Trusted Core: RA v0.0.1 started
+[2022-12-18 00:47:18] [info] Configuration file loaded sucessfully, /home/acavella/github/trustedcore-ra/conf/tcra.conf
+[2022-12-18 00:47:18] [info] Reading input file to memory, input/test.txt
+[2022-12-18 00:47:18] [info] Completed reading input file, 1099 bytes, input/test.txt
+[2022-12-18 00:47:18] [info] Generating private key and csr for each subject
+[2022-12-18 00:47:18] [info] Creating directory
+[2022-12-18 00:47:18] [info] Directory created, /home/acavella/github/trustedcore-ra/output/V2BDF94D83
+[2022-12-18 00:47:18] [info] Generating private key for V2BDF94D83
+[2022-12-18 00:47:18] [info] Private key generated, V2BDF94D83.key
+[2022-12-18 00:47:18] [info] Generating PKCS#10 CSR for V2BDF94D83

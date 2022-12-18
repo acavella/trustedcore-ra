@@ -1,0 +1,30 @@
+[2022-12-18 00:26:11] [info]  Trusted Core: RA v0.0.1 started
+[2022-12-18 00:26:11] [info] Configuration file loaded sucessfully, /home/acavella/github/trustedcore-ra/conf/tcra.conf
+[2022-12-18 00:26:11] [info] Reading input file to memory, input/test.txt
+[2022-12-18 00:26:11] [info] Completed reading input file, 43 bytes, input/test.txt
+[2022-12-18 00:26:11] [info] Generating private key and csr for each subject
+[2022-12-18 00:26:11] [info] Creating directory
+[2022-12-18 00:26:11] [info] Directory created, /home/acavella/github/trustedcore-ra/output/R58SKE32LF
+[2022-12-18 00:26:11] [info] Generating private key for R58SKE32LF
+[2022-12-18 00:26:11] [info] Private key generated, R58SKE32LF.key
+[2022-12-18 00:26:11] [info] Generating PKCS#10 CSR for R58SKE32LF
+[2022-12-18 00:26:11] [info] PKCS#10 CSR generated, R58SKE32LF.csr
+[2022-12-18 00:26:11] [info] Creating directory
+[2022-12-18 00:26:11] [info] Directory created, /home/acavella/github/trustedcore-ra/output/R58SKE32LK
+[2022-12-18 00:26:11] [info] Generating private key for R58SKE32LK
+[2022-12-18 00:26:11] [info] Private key generated, R58SKE32LK.key
+[2022-12-18 00:26:11] [info] Generating PKCS#10 CSR for R58SKE32LK
+[2022-12-18 00:26:11] [info] PKCS#10 CSR generated, R58SKE32LK.csr
+[2022-12-18 00:26:11] [info] Creating directory
+[2022-12-18 00:26:11] [info] Directory created, /home/acavella/github/trustedcore-ra/output/R58SKE32LG
+[2022-12-18 00:26:11] [info] Generating private key for R58SKE32LG
+[2022-12-18 00:26:11] [info] Private key generated, R58SKE32LG.key
+[2022-12-18 00:26:11] [info] Generating PKCS#10 CSR for R58SKE32LG
+[2022-12-18 00:26:11] [info] PKCS#10 CSR generated, R58SKE32LG.csr
+[2022-12-18 00:26:11] [info] Creating directory
+[2022-12-18 00:26:11] [info] Directory created, /home/acavella/github/trustedcore-ra/output/R58SKE32LH
+[2022-12-18 00:26:11] [info] Generating private key for R58SKE32LH
+[2022-12-18 00:26:11] [info] Private key generated, R58SKE32LH.key
+[2022-12-18 00:26:11] [info] Generating PKCS#10 CSR for R58SKE32LH
+[2022-12-18 00:26:11] [info] PKCS#10 CSR generated, R58SKE32LH.csr
+[2022-12-18 00:26:11] [info] Completed generating 4 private keys and csr

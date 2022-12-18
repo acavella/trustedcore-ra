@@ -1,0 +1,4 @@
+[2022-12-17 23:22:34] [info]  Trusted Core: RA v0.0.1 started
+[2022-12-17 23:22:34] [info] Configuration file loaded sucessfully, /home/acavella/github/trustedcore-ra/conf/tcra.conf
+[2022-12-17 23:22:34] [info] Reading input file, input/test.txt
+[2022-12-17 23:22:34] [info] Completed reading input file, 43, input/test.txt

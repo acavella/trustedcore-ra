@@ -1,0 +1,606 @@
+[2022-12-18 00:37:43] [info]  Trusted Core: RA v0.0.1 started
+[2022-12-18 00:37:43] [info] Configuration file loaded sucessfully, /home/acavella/github/trustedcore-ra/conf/tcra.conf
+[2022-12-18 00:37:43] [info] Reading input file to memory, input/test.txt
+[2022-12-18 00:37:43] [info] Completed reading input file, 1099 bytes, input/test.txt
+[2022-12-18 00:37:43] [info] Generating private key and csr for each subject
+[2022-12-18 00:37:43] [info] Creating directory
+[2022-12-18 00:37:43] [info] Directory created, /home/acavella/github/trustedcore-ra/output/V2BDF94D83
+[2022-12-18 00:37:43] [info] Generating private key for V2BDF94D83
+[2022-12-18 00:37:43] [info] Private key generated, V2BDF94D83.key
+[2022-12-18 00:37:43] [info] Generating PKCS#10 CSR for V2BDF94D83
+[2022-12-18 00:37:43] [info] PKCS#10 CSR generated, V2BDF94D83.csr
+[2022-12-18 00:37:43] [info] Creating directory
+[2022-12-18 00:37:43] [info] Directory created, /home/acavella/github/trustedcore-ra/output/8EXEFN002D
+[2022-12-18 00:37:43] [info] Generating private key for 8EXEFN002D
+[2022-12-18 00:37:43] [info] Private key generated, 8EXEFN002D.key
+[2022-12-18 00:37:43] [info] Generating PKCS#10 CSR for 8EXEFN002D
+[2022-12-18 00:37:43] [info] PKCS#10 CSR generated, 8EXEFN002D.csr
+[2022-12-18 00:37:43] [info] Creating directory
+[2022-12-18 00:37:43] [info] Directory created, /home/acavella/github/trustedcore-ra/output/EDVGR8YSVU
+[2022-12-18 00:37:43] [info] Generating private key for EDVGR8YSVU
+[2022-12-18 00:37:43] [info] Private key generated, EDVGR8YSVU.key
+[2022-12-18 00:37:43] [info] Generating PKCS#10 CSR for EDVGR8YSVU
+[2022-12-18 00:37:43] [info] PKCS#10 CSR generated, EDVGR8YSVU.csr
+[2022-12-18 00:37:43] [info] Creating directory
+[2022-12-18 00:37:43] [info] Directory created, /home/acavella/github/trustedcore-ra/output/TBETCTEA7F
+[2022-12-18 00:37:43] [info] Generating private key for TBETCTEA7F
+[2022-12-18 00:37:43] [info] Private key generated, TBETCTEA7F.key
+[2022-12-18 00:37:43] [info] Generating PKCS#10 CSR for TBETCTEA7F
+[2022-12-18 00:37:43] [info] PKCS#10 CSR generated, TBETCTEA7F.csr
+[2022-12-18 00:37:43] [info] Creating directory
+[2022-12-18 00:37:43] [info] Directory created, /home/acavella/github/trustedcore-ra/output/QPJSGAIPW3
+[2022-12-18 00:37:43] [info] Generating private key for QPJSGAIPW3
+[2022-12-18 00:37:44] [info] Private key generated, QPJSGAIPW3.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for QPJSGAIPW3
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, QPJSGAIPW3.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/K6XRZ0MWRY
+[2022-12-18 00:37:44] [info] Generating private key for K6XRZ0MWRY
+[2022-12-18 00:37:44] [info] Private key generated, K6XRZ0MWRY.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for K6XRZ0MWRY
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, K6XRZ0MWRY.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/J3MPSA7IH0
+[2022-12-18 00:37:44] [info] Generating private key for J3MPSA7IH0
+[2022-12-18 00:37:44] [info] Private key generated, J3MPSA7IH0.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for J3MPSA7IH0
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, J3MPSA7IH0.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/ZXKLGMEEIQ
+[2022-12-18 00:37:44] [info] Generating private key for ZXKLGMEEIQ
+[2022-12-18 00:37:44] [info] Private key generated, ZXKLGMEEIQ.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for ZXKLGMEEIQ
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, ZXKLGMEEIQ.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/QOJ9WNL6CR
+[2022-12-18 00:37:44] [info] Generating private key for QOJ9WNL6CR
+[2022-12-18 00:37:44] [info] Private key generated, QOJ9WNL6CR.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for QOJ9WNL6CR
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, QOJ9WNL6CR.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/VGW6XALVTX
+[2022-12-18 00:37:44] [info] Generating private key for VGW6XALVTX
+[2022-12-18 00:37:44] [info] Private key generated, VGW6XALVTX.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for VGW6XALVTX
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, VGW6XALVTX.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/TSRWZUH956
+[2022-12-18 00:37:44] [info] Generating private key for TSRWZUH956
+[2022-12-18 00:37:44] [info] Private key generated, TSRWZUH956.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for TSRWZUH956
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, TSRWZUH956.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/YB9KACVD9M
+[2022-12-18 00:37:44] [info] Generating private key for YB9KACVD9M
+[2022-12-18 00:37:44] [info] Private key generated, YB9KACVD9M.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for YB9KACVD9M
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, YB9KACVD9M.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/TDFGQCOTE4
+[2022-12-18 00:37:44] [info] Generating private key for TDFGQCOTE4
+[2022-12-18 00:37:44] [info] Private key generated, TDFGQCOTE4.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for TDFGQCOTE4
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, TDFGQCOTE4.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/R2P1VR2IJI
+[2022-12-18 00:37:44] [info] Generating private key for R2P1VR2IJI
+[2022-12-18 00:37:44] [info] Private key generated, R2P1VR2IJI.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for R2P1VR2IJI
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, R2P1VR2IJI.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/OFLFQE65GB
+[2022-12-18 00:37:44] [info] Generating private key for OFLFQE65GB
+[2022-12-18 00:37:44] [info] Private key generated, OFLFQE65GB.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for OFLFQE65GB
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, OFLFQE65GB.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/LL8KR7GNZB
+[2022-12-18 00:37:44] [info] Generating private key for LL8KR7GNZB
+[2022-12-18 00:37:44] [info] Private key generated, LL8KR7GNZB.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for LL8KR7GNZB
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, LL8KR7GNZB.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/EO2XGA2HYQ
+[2022-12-18 00:37:44] [info] Generating private key for EO2XGA2HYQ
+[2022-12-18 00:37:44] [info] Private key generated, EO2XGA2HYQ.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for EO2XGA2HYQ
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, EO2XGA2HYQ.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/MSJ4BPT64Z
+[2022-12-18 00:37:44] [info] Generating private key for MSJ4BPT64Z
+[2022-12-18 00:37:44] [info] Private key generated, MSJ4BPT64Z.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for MSJ4BPT64Z
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, MSJ4BPT64Z.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/A9WGMIOALL
+[2022-12-18 00:37:44] [info] Generating private key for A9WGMIOALL
+[2022-12-18 00:37:44] [info] Private key generated, A9WGMIOALL.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for A9WGMIOALL
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, A9WGMIOALL.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/KH8G8RFBRM
+[2022-12-18 00:37:44] [info] Generating private key for KH8G8RFBRM
+[2022-12-18 00:37:44] [info] Private key generated, KH8G8RFBRM.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for KH8G8RFBRM
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, KH8G8RFBRM.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/SF3J29L5N7
+[2022-12-18 00:37:44] [info] Generating private key for SF3J29L5N7
+[2022-12-18 00:37:44] [info] Private key generated, SF3J29L5N7.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for SF3J29L5N7
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, SF3J29L5N7.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/MLNI0LZP6E
+[2022-12-18 00:37:44] [info] Generating private key for MLNI0LZP6E
+[2022-12-18 00:37:44] [info] Private key generated, MLNI0LZP6E.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for MLNI0LZP6E
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, MLNI0LZP6E.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/IV7HHH5GKO
+[2022-12-18 00:37:44] [info] Generating private key for IV7HHH5GKO
+[2022-12-18 00:37:44] [info] Private key generated, IV7HHH5GKO.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for IV7HHH5GKO
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, IV7HHH5GKO.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/VW0RJ8FR36
+[2022-12-18 00:37:44] [info] Generating private key for VW0RJ8FR36
+[2022-12-18 00:37:44] [info] Private key generated, VW0RJ8FR36.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for VW0RJ8FR36
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, VW0RJ8FR36.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/QUFYIIXNNZ
+[2022-12-18 00:37:44] [info] Generating private key for QUFYIIXNNZ
+[2022-12-18 00:37:44] [info] Private key generated, QUFYIIXNNZ.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for QUFYIIXNNZ
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, QUFYIIXNNZ.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/SJ1B50ZCLD
+[2022-12-18 00:37:44] [info] Generating private key for SJ1B50ZCLD
+[2022-12-18 00:37:44] [info] Private key generated, SJ1B50ZCLD.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for SJ1B50ZCLD
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, SJ1B50ZCLD.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/938UONSJ2Z
+[2022-12-18 00:37:44] [info] Generating private key for 938UONSJ2Z
+[2022-12-18 00:37:44] [info] Private key generated, 938UONSJ2Z.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for 938UONSJ2Z
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, 938UONSJ2Z.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/OOH35NOSH0
+[2022-12-18 00:37:44] [info] Generating private key for OOH35NOSH0
+[2022-12-18 00:37:44] [info] Private key generated, OOH35NOSH0.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for OOH35NOSH0
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, OOH35NOSH0.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/LSIF5Q3RK2
+[2022-12-18 00:37:44] [info] Generating private key for LSIF5Q3RK2
+[2022-12-18 00:37:44] [info] Private key generated, LSIF5Q3RK2.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for LSIF5Q3RK2
+[2022-12-18 00:37:44] [info] PKCS#10 CSR generated, LSIF5Q3RK2.csr
+[2022-12-18 00:37:44] [info] Creating directory
+[2022-12-18 00:37:44] [info] Directory created, /home/acavella/github/trustedcore-ra/output/K38450QXDW
+[2022-12-18 00:37:44] [info] Generating private key for K38450QXDW
+[2022-12-18 00:37:44] [info] Private key generated, K38450QXDW.key
+[2022-12-18 00:37:44] [info] Generating PKCS#10 CSR for K38450QXDW
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, K38450QXDW.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/D9V4XMPVI3
+[2022-12-18 00:37:45] [info] Generating private key for D9V4XMPVI3
+[2022-12-18 00:37:45] [info] Private key generated, D9V4XMPVI3.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for D9V4XMPVI3
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, D9V4XMPVI3.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/CS50ED6GO0
+[2022-12-18 00:37:45] [info] Generating private key for CS50ED6GO0
+[2022-12-18 00:37:45] [info] Private key generated, CS50ED6GO0.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for CS50ED6GO0
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, CS50ED6GO0.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/Z6EBE3ZCQW
+[2022-12-18 00:37:45] [info] Generating private key for Z6EBE3ZCQW
+[2022-12-18 00:37:45] [info] Private key generated, Z6EBE3ZCQW.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for Z6EBE3ZCQW
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, Z6EBE3ZCQW.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/Y58VDNDZQC
+[2022-12-18 00:37:45] [info] Generating private key for Y58VDNDZQC
+[2022-12-18 00:37:45] [info] Private key generated, Y58VDNDZQC.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for Y58VDNDZQC
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, Y58VDNDZQC.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/J1ILVJFKXR
+[2022-12-18 00:37:45] [info] Generating private key for J1ILVJFKXR
+[2022-12-18 00:37:45] [info] Private key generated, J1ILVJFKXR.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for J1ILVJFKXR
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, J1ILVJFKXR.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/IQM9I771HZ
+[2022-12-18 00:37:45] [info] Generating private key for IQM9I771HZ
+[2022-12-18 00:37:45] [info] Private key generated, IQM9I771HZ.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for IQM9I771HZ
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, IQM9I771HZ.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/92HIFPLK94
+[2022-12-18 00:37:45] [info] Generating private key for 92HIFPLK94
+[2022-12-18 00:37:45] [info] Private key generated, 92HIFPLK94.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for 92HIFPLK94
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, 92HIFPLK94.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/YYH04XIRVP
+[2022-12-18 00:37:45] [info] Generating private key for YYH04XIRVP
+[2022-12-18 00:37:45] [info] Private key generated, YYH04XIRVP.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for YYH04XIRVP
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, YYH04XIRVP.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/V225FLQO8R
+[2022-12-18 00:37:45] [info] Generating private key for V225FLQO8R
+[2022-12-18 00:37:45] [info] Private key generated, V225FLQO8R.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for V225FLQO8R
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, V225FLQO8R.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/7I9FPJNQ36
+[2022-12-18 00:37:45] [info] Generating private key for 7I9FPJNQ36
+[2022-12-18 00:37:45] [info] Private key generated, 7I9FPJNQ36.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for 7I9FPJNQ36
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, 7I9FPJNQ36.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/50UF5688XA
+[2022-12-18 00:37:45] [info] Generating private key for 50UF5688XA
+[2022-12-18 00:37:45] [info] Private key generated, 50UF5688XA.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for 50UF5688XA
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, 50UF5688XA.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/1C2DL8JRGA
+[2022-12-18 00:37:45] [info] Generating private key for 1C2DL8JRGA
+[2022-12-18 00:37:45] [info] Private key generated, 1C2DL8JRGA.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for 1C2DL8JRGA
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, 1C2DL8JRGA.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/5EANEOS9QQ
+[2022-12-18 00:37:45] [info] Generating private key for 5EANEOS9QQ
+[2022-12-18 00:37:45] [info] Private key generated, 5EANEOS9QQ.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for 5EANEOS9QQ
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, 5EANEOS9QQ.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/U9BEZ9SI0B
+[2022-12-18 00:37:45] [info] Generating private key for U9BEZ9SI0B
+[2022-12-18 00:37:45] [info] Private key generated, U9BEZ9SI0B.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for U9BEZ9SI0B
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, U9BEZ9SI0B.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/CCZNG8OEQ8
+[2022-12-18 00:37:45] [info] Generating private key for CCZNG8OEQ8
+[2022-12-18 00:37:45] [info] Private key generated, CCZNG8OEQ8.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for CCZNG8OEQ8
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, CCZNG8OEQ8.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/4W1NELRTDE
+[2022-12-18 00:37:45] [info] Generating private key for 4W1NELRTDE
+[2022-12-18 00:37:45] [info] Private key generated, 4W1NELRTDE.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for 4W1NELRTDE
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, 4W1NELRTDE.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/9RZCS90QVG
+[2022-12-18 00:37:45] [info] Generating private key for 9RZCS90QVG
+[2022-12-18 00:37:45] [info] Private key generated, 9RZCS90QVG.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for 9RZCS90QVG
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, 9RZCS90QVG.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/UA2ZL2EYA8
+[2022-12-18 00:37:45] [info] Generating private key for UA2ZL2EYA8
+[2022-12-18 00:37:45] [info] Private key generated, UA2ZL2EYA8.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for UA2ZL2EYA8
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, UA2ZL2EYA8.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/8HULEBJ2B5
+[2022-12-18 00:37:45] [info] Generating private key for 8HULEBJ2B5
+[2022-12-18 00:37:45] [info] Private key generated, 8HULEBJ2B5.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for 8HULEBJ2B5
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, 8HULEBJ2B5.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/HYZBZGXCJL
+[2022-12-18 00:37:45] [info] Generating private key for HYZBZGXCJL
+[2022-12-18 00:37:45] [info] Private key generated, HYZBZGXCJL.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for HYZBZGXCJL
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, HYZBZGXCJL.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/N9G0PAGZ9K
+[2022-12-18 00:37:45] [info] Generating private key for N9G0PAGZ9K
+[2022-12-18 00:37:45] [info] Private key generated, N9G0PAGZ9K.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for N9G0PAGZ9K
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, N9G0PAGZ9K.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/4N9IJ0YC8I
+[2022-12-18 00:37:45] [info] Generating private key for 4N9IJ0YC8I
+[2022-12-18 00:37:45] [info] Private key generated, 4N9IJ0YC8I.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for 4N9IJ0YC8I
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, 4N9IJ0YC8I.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/TNQGS0H13A
+[2022-12-18 00:37:45] [info] Generating private key for TNQGS0H13A
+[2022-12-18 00:37:45] [info] Private key generated, TNQGS0H13A.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for TNQGS0H13A
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, TNQGS0H13A.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/XINNT9F9F1
+[2022-12-18 00:37:45] [info] Generating private key for XINNT9F9F1
+[2022-12-18 00:37:45] [info] Private key generated, XINNT9F9F1.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for XINNT9F9F1
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, XINNT9F9F1.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/89C7N5RQA0
+[2022-12-18 00:37:45] [info] Generating private key for 89C7N5RQA0
+[2022-12-18 00:37:45] [info] Private key generated, 89C7N5RQA0.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for 89C7N5RQA0
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, 89C7N5RQA0.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/P23RN4E0WU
+[2022-12-18 00:37:45] [info] Generating private key for P23RN4E0WU
+[2022-12-18 00:37:45] [info] Private key generated, P23RN4E0WU.key
+[2022-12-18 00:37:45] [info] Generating PKCS#10 CSR for P23RN4E0WU
+[2022-12-18 00:37:45] [info] PKCS#10 CSR generated, P23RN4E0WU.csr
+[2022-12-18 00:37:45] [info] Creating directory
+[2022-12-18 00:37:45] [info] Directory created, /home/acavella/github/trustedcore-ra/output/MALRK734XQ
+[2022-12-18 00:37:45] [info] Generating private key for MALRK734XQ
+[2022-12-18 00:37:45] [info] Private key generated, MALRK734XQ.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for MALRK734XQ
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, MALRK734XQ.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/TOP0MS58T0
+[2022-12-18 00:37:46] [info] Generating private key for TOP0MS58T0
+[2022-12-18 00:37:46] [info] Private key generated, TOP0MS58T0.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for TOP0MS58T0
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, TOP0MS58T0.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/32SGK9246C
+[2022-12-18 00:37:46] [info] Generating private key for 32SGK9246C
+[2022-12-18 00:37:46] [info] Private key generated, 32SGK9246C.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for 32SGK9246C
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, 32SGK9246C.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/XJJOPEJ8V7
+[2022-12-18 00:37:46] [info] Generating private key for XJJOPEJ8V7
+[2022-12-18 00:37:46] [info] Private key generated, XJJOPEJ8V7.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for XJJOPEJ8V7
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, XJJOPEJ8V7.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/CX0IJYL6IX
+[2022-12-18 00:37:46] [info] Generating private key for CX0IJYL6IX
+[2022-12-18 00:37:46] [info] Private key generated, CX0IJYL6IX.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for CX0IJYL6IX
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, CX0IJYL6IX.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/545HM0NA32
+[2022-12-18 00:37:46] [info] Generating private key for 545HM0NA32
+[2022-12-18 00:37:46] [info] Private key generated, 545HM0NA32.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for 545HM0NA32
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, 545HM0NA32.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/MWV24JV7Z9
+[2022-12-18 00:37:46] [info] Generating private key for MWV24JV7Z9
+[2022-12-18 00:37:46] [info] Private key generated, MWV24JV7Z9.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for MWV24JV7Z9
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, MWV24JV7Z9.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/360MNK57LF
+[2022-12-18 00:37:46] [info] Generating private key for 360MNK57LF
+[2022-12-18 00:37:46] [info] Private key generated, 360MNK57LF.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for 360MNK57LF
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, 360MNK57LF.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/8URGLPIY3H
+[2022-12-18 00:37:46] [info] Generating private key for 8URGLPIY3H
+[2022-12-18 00:37:46] [info] Private key generated, 8URGLPIY3H.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for 8URGLPIY3H
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, 8URGLPIY3H.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/WSCJYQIOTW
+[2022-12-18 00:37:46] [info] Generating private key for WSCJYQIOTW
+[2022-12-18 00:37:46] [info] Private key generated, WSCJYQIOTW.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for WSCJYQIOTW
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, WSCJYQIOTW.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/BO781XRJQD
+[2022-12-18 00:37:46] [info] Generating private key for BO781XRJQD
+[2022-12-18 00:37:46] [info] Private key generated, BO781XRJQD.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for BO781XRJQD
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, BO781XRJQD.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/C2GR910XA3
+[2022-12-18 00:37:46] [info] Generating private key for C2GR910XA3
+[2022-12-18 00:37:46] [info] Private key generated, C2GR910XA3.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for C2GR910XA3
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, C2GR910XA3.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/0R4TE8GE02
+[2022-12-18 00:37:46] [info] Generating private key for 0R4TE8GE02
+[2022-12-18 00:37:46] [info] Private key generated, 0R4TE8GE02.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for 0R4TE8GE02
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, 0R4TE8GE02.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/R60M0SAHZ6
+[2022-12-18 00:37:46] [info] Generating private key for R60M0SAHZ6
+[2022-12-18 00:37:46] [info] Private key generated, R60M0SAHZ6.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for R60M0SAHZ6
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, R60M0SAHZ6.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/CQMH8HTIX1
+[2022-12-18 00:37:46] [info] Generating private key for CQMH8HTIX1
+[2022-12-18 00:37:46] [info] Private key generated, CQMH8HTIX1.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for CQMH8HTIX1
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, CQMH8HTIX1.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/1K76JN2FEF
+[2022-12-18 00:37:46] [info] Generating private key for 1K76JN2FEF
+[2022-12-18 00:37:46] [info] Private key generated, 1K76JN2FEF.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for 1K76JN2FEF
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, 1K76JN2FEF.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/Q9BG6SHUCD
+[2022-12-18 00:37:46] [info] Generating private key for Q9BG6SHUCD
+[2022-12-18 00:37:46] [info] Private key generated, Q9BG6SHUCD.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for Q9BG6SHUCD
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, Q9BG6SHUCD.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/6S0DQCPXNO
+[2022-12-18 00:37:46] [info] Generating private key for 6S0DQCPXNO
+[2022-12-18 00:37:46] [info] Private key generated, 6S0DQCPXNO.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for 6S0DQCPXNO
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, 6S0DQCPXNO.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/7K8NJESYY5
+[2022-12-18 00:37:46] [info] Generating private key for 7K8NJESYY5
+[2022-12-18 00:37:46] [info] Private key generated, 7K8NJESYY5.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for 7K8NJESYY5
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, 7K8NJESYY5.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/BAMWO3INEH
+[2022-12-18 00:37:46] [info] Generating private key for BAMWO3INEH
+[2022-12-18 00:37:46] [info] Private key generated, BAMWO3INEH.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for BAMWO3INEH
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, BAMWO3INEH.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/DS5KNC5ULD
+[2022-12-18 00:37:46] [info] Generating private key for DS5KNC5ULD
+[2022-12-18 00:37:46] [info] Private key generated, DS5KNC5ULD.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for DS5KNC5ULD
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, DS5KNC5ULD.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/WNS9N994JB
+[2022-12-18 00:37:46] [info] Generating private key for WNS9N994JB
+[2022-12-18 00:37:46] [info] Private key generated, WNS9N994JB.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for WNS9N994JB
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, WNS9N994JB.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/4EJOFHD64L
+[2022-12-18 00:37:46] [info] Generating private key for 4EJOFHD64L
+[2022-12-18 00:37:46] [info] Private key generated, 4EJOFHD64L.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for 4EJOFHD64L
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, 4EJOFHD64L.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/P941RRR81E
+[2022-12-18 00:37:46] [info] Generating private key for P941RRR81E
+[2022-12-18 00:37:46] [info] Private key generated, P941RRR81E.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for P941RRR81E
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, P941RRR81E.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/CWR78NVO39
+[2022-12-18 00:37:46] [info] Generating private key for CWR78NVO39
+[2022-12-18 00:37:46] [info] Private key generated, CWR78NVO39.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for CWR78NVO39
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, CWR78NVO39.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/HN5B0A9J0F
+[2022-12-18 00:37:46] [info] Generating private key for HN5B0A9J0F
+[2022-12-18 00:37:46] [info] Private key generated, HN5B0A9J0F.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for HN5B0A9J0F
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, HN5B0A9J0F.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/2ZTO34VADN
+[2022-12-18 00:37:46] [info] Generating private key for 2ZTO34VADN
+[2022-12-18 00:37:46] [info] Private key generated, 2ZTO34VADN.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for 2ZTO34VADN
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, 2ZTO34VADN.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:46] [info] Directory created, /home/acavella/github/trustedcore-ra/output/R78JJDA356
+[2022-12-18 00:37:46] [info] Generating private key for R78JJDA356
+[2022-12-18 00:37:46] [info] Private key generated, R78JJDA356.key
+[2022-12-18 00:37:46] [info] Generating PKCS#10 CSR for R78JJDA356
+[2022-12-18 00:37:46] [info] PKCS#10 CSR generated, R78JJDA356.csr
+[2022-12-18 00:37:46] [info] Creating directory
+[2022-12-18 00:37:47] [info] Directory created, /home/acavella/github/trustedcore-ra/output/16MTTRAISB
+[2022-12-18 00:37:47] [info] Generating private key for 16MTTRAISB
+[2022-12-18 00:37:47] [info] Private key generated, 16MTTRAISB.key
+[2022-12-18 00:37:47] [info] Generating PKCS#10 CSR for 16MTTRAISB
+[2022-12-18 00:37:47] [info] PKCS#10 CSR generated, 16MTTRAISB.csr
+[2022-12-18 00:37:47] [info] Creating directory
+[2022-12-18 00:37:47] [info] Directory created, /home/acavella/github/trustedcore-ra/output/YNJZN2SMMQ
+[2022-12-18 00:37:47] [info] Generating private key for YNJZN2SMMQ
+[2022-12-18 00:37:47] [info] Private key generated, YNJZN2SMMQ.key
+[2022-12-18 00:37:47] [info] Generating PKCS#10 CSR for YNJZN2SMMQ
+[2022-12-18 00:37:47] [info] PKCS#10 CSR generated, YNJZN2SMMQ.csr
+[2022-12-18 00:37:47] [info] Creating directory
+[2022-12-18 00:37:47] [info] Directory created, /home/acavella/github/trustedcore-ra/output/CD46T8RAUG
+[2022-12-18 00:37:47] [info] Generating private key for CD46T8RAUG
+[2022-12-18 00:37:47] [info] Private key generated, CD46T8RAUG.key
+[2022-12-18 00:37:47] [info] Generating PKCS#10 CSR for CD46T8RAUG
+[2022-12-18 00:37:47] [info] PKCS#10 CSR generated, CD46T8RAUG.csr
+[2022-12-18 00:37:47] [info] Creating directory
+[2022-12-18 00:37:47] [info] Directory created, /home/acavella/github/trustedcore-ra/output/ISCZL8GB3B
+[2022-12-18 00:37:47] [info] Generating private key for ISCZL8GB3B
+[2022-12-18 00:37:47] [info] Private key generated, ISCZL8GB3B.key
+[2022-12-18 00:37:47] [info] Generating PKCS#10 CSR for ISCZL8GB3B
+[2022-12-18 00:37:47] [info] PKCS#10 CSR generated, ISCZL8GB3B.csr
+[2022-12-18 00:37:47] [info] Creating directory
+[2022-12-18 00:37:47] [info] Directory created, /home/acavella/github/trustedcore-ra/output/MG1WEGYORH
+[2022-12-18 00:37:47] [info] Generating private key for MG1WEGYORH
+[2022-12-18 00:37:47] [info] Private key generated, MG1WEGYORH.key
+[2022-12-18 00:37:47] [info] Generating PKCS#10 CSR for MG1WEGYORH
+[2022-12-18 00:37:47] [info] PKCS#10 CSR generated, MG1WEGYORH.csr
+[2022-12-18 00:37:47] [info] Creating directory
+[2022-12-18 00:37:47] [info] Directory created, /home/acavella/github/trustedcore-ra/output/E4WU177SW3
+[2022-12-18 00:37:47] [info] Generating private key for E4WU177SW3
+[2022-12-18 00:37:47] [info] Private key generated, E4WU177SW3.key
+[2022-12-18 00:37:47] [info] Generating PKCS#10 CSR for E4WU177SW3
+[2022-12-18 00:37:47] [info] PKCS#10 CSR generated, E4WU177SW3.csr
+[2022-12-18 00:37:47] [info] Creating directory
+[2022-12-18 00:37:47] [info] Directory created, /home/acavella/github/trustedcore-ra/output/O9NO3OLP1K
+[2022-12-18 00:37:47] [info] Generating private key for O9NO3OLP1K
+[2022-12-18 00:37:47] [info] Private key generated, O9NO3OLP1K.key
+[2022-12-18 00:37:47] [info] Generating PKCS#10 CSR for O9NO3OLP1K
+[2022-12-18 00:37:47] [info] PKCS#10 CSR generated, O9NO3OLP1K.csr
+[2022-12-18 00:37:47] [info] Creating directory
+[2022-12-18 00:37:47] [info] Directory created, /home/acavella/github/trustedcore-ra/output/PWJYROQR05
+[2022-12-18 00:37:47] [info] Generating private key for PWJYROQR05
+[2022-12-18 00:37:47] [info] Private key generated, PWJYROQR05.key
+[2022-12-18 00:37:47] [info] Generating PKCS#10 CSR for PWJYROQR05
+[2022-12-18 00:37:47] [info] PKCS#10 CSR generated, PWJYROQR05.csr
+[2022-12-18 00:37:47] [info] Creating directory
+[2022-12-18 00:37:47] [info] Directory created, /home/acavella/github/trustedcore-ra/output/GO0IM0G3F3
+[2022-12-18 00:37:47] [info] Generating private key for GO0IM0G3F3
+[2022-12-18 00:37:47] [info] Private key generated, GO0IM0G3F3.key
+[2022-12-18 00:37:47] [info] Generating PKCS#10 CSR for GO0IM0G3F3
+[2022-12-18 00:37:47] [info] PKCS#10 CSR generated, GO0IM0G3F3.csr
+[2022-12-18 00:37:47] [info] Creating directory
+[2022-12-18 00:37:47] [info] Directory created, /home/acavella/github/trustedcore-ra/output/M344CDAT1H
+[2022-12-18 00:37:47] [info] Generating private key for M344CDAT1H
+[2022-12-18 00:37:47] [info] Private key generated, M344CDAT1H.key
+[2022-12-18 00:37:47] [info] Generating PKCS#10 CSR for M344CDAT1H
+[2022-12-18 00:37:47] [info] PKCS#10 CSR generated, M344CDAT1H.csr
+[2022-12-18 00:37:47] [info] Creating directory
+[2022-12-18 00:37:47] [info] Directory created, /home/acavella/github/trustedcore-ra/output/BPK4BO8S6H
+[2022-12-18 00:37:47] [info] Generating private key for BPK4BO8S6H
+[2022-12-18 00:37:47] [info] Private key generated, BPK4BO8S6H.key
+[2022-12-18 00:37:47] [info] Generating PKCS#10 CSR for BPK4BO8S6H
+[2022-12-18 00:37:47] [info] PKCS#10 CSR generated, BPK4BO8S6H.csr
+[2022-12-18 00:37:47] [info] Creating directory
+[2022-12-18 00:37:47] [info] Directory created, /home/acavella/github/trustedcore-ra/output/SQZ8OYMLM3
+[2022-12-18 00:37:47] [info] Generating private key for SQZ8OYMLM3
+[2022-12-18 00:37:47] [info] Private key generated, SQZ8OYMLM3.key
+[2022-12-18 00:37:47] [info] Generating PKCS#10 CSR for SQZ8OYMLM3
+[2022-12-18 00:37:47] [info] PKCS#10 CSR generated, SQZ8OYMLM3.csr
+[2022-12-18 00:37:47] [info] Creating directory
+[2022-12-18 00:37:47] [info] Directory created, /home/acavella/github/trustedcore-ra/output/MLI4BO0KUT
+[2022-12-18 00:37:47] [info] Generating private key for MLI4BO0KUT
+[2022-12-18 00:37:47] [info] Private key generated, MLI4BO0KUT.key
+[2022-12-18 00:37:47] [info] Generating PKCS#10 CSR for MLI4BO0KUT
+[2022-12-18 00:37:47] [info] PKCS#10 CSR generated, MLI4BO0KUT.csr
+[2022-12-18 00:37:47] [info] Creating directory
+[2022-12-18 00:37:47] [info] Directory created, /home/acavella/github/trustedcore-ra/output/P3HQWHUYAH
+[2022-12-18 00:37:47] [info] Generating private key for P3HQWHUYAH
+[2022-12-18 00:37:47] [info] Private key generated, P3HQWHUYAH.key
+[2022-12-18 00:37:47] [info] Generating PKCS#10 CSR for P3HQWHUYAH
+[2022-12-18 00:37:47] [info] PKCS#10 CSR generated, P3HQWHUYAH.csr
+[2022-12-18 00:37:47] [info] Creating directory
+[2022-12-18 00:37:47] [info] Directory created, /home/acavella/github/trustedcore-ra/output/K2MPELT5PE
+[2022-12-18 00:37:47] [info] Generating private key for K2MPELT5PE
+[2022-12-18 00:37:47] [info] Private key generated, K2MPELT5PE.key
+[2022-12-18 00:37:47] [info] Generating PKCS#10 CSR for K2MPELT5PE
+[2022-12-18 00:37:47] [info] PKCS#10 CSR generated, K2MPELT5PE.csr
+[2022-12-18 00:37:47] [info] Creating directory
+[2022-12-18 00:37:47] [info] Directory created, /home/acavella/github/trustedcore-ra/output/GW7RZ4FK30
+[2022-12-18 00:37:47] [info] Generating private key for GW7RZ4FK30
+[2022-12-18 00:37:47] [info] Private key generated, GW7RZ4FK30.key
+[2022-12-18 00:37:47] [info] Generating PKCS#10 CSR for GW7RZ4FK30
+[2022-12-18 00:37:47] [info] PKCS#10 CSR generated, GW7RZ4FK30.csr
+[2022-12-18 00:37:47] [info] Completed generating 100 private key and csr pairs
