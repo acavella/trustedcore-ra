@@ -1,5 +1,5 @@
 # Trusted Core: Registration Authority 
-A custom client designed to perform registration authority functions utilizing the Registration Authority Management Interface (RAMI) secure API.
+A custom registration authority client to be used with the ISC CertAgent RAMI API, which allows for the automated generation of single or bulk x.509 certificates.
 
 ## Prerequisites
 
