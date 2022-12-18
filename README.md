@@ -13,7 +13,7 @@ A custom client designed to perform registration authority functions utilizing t
 
 **Tony Cavella** 
 - <tony@cavella.com>
-- (https://github.com/acavella/trustedcore-ra)
+- <https://github.com/acavella/trustedcore-ra>
 
 ### License
 
