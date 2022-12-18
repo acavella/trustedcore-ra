@@ -16,6 +16,7 @@ A custom client designed to perform registration authority functions utilizing t
 - (https://github.com/acavella/trustedcore-ra)
 
 ### License
+
 MIT License
 
 Copyright (c) 2022 Tony Cavella
