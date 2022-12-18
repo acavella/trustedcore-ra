@@ -3,9 +3,24 @@ A custom client designed to perform registration authority functions utilizing t
 
 ## Prerequisites
 
+- Bash
+- OpenSSL
+- Curl
+
 ## Installation
 
 ## Usage
+
+This script is meant to be operated directly from CLI input; all options are specified inline.
+
+**ECDSA Generation**
+`./tcra.sh <input-file> ecdsa`
+
+**ECDH Generation**
+`./tcra.sh <input-file> ecdh`
+
+**RSA Generation**
+`./tcra.sh <input-file> rsa`
 
 ## License & Credits
 
