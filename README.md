@@ -10,16 +10,15 @@ A custom registration authority client to be used with the ISC CertAgent RAMI AP
 ## Installation
 
 ## Usage
+This script is meant to be operated directly from CLI; all options are specified inline. The first operator is an input file which consists of a lists of Common Names (CN) to be used in the generation of PKCS#10 Certificate Signing Requests (CSR). The second operator is certificate specification (ECDSA, ECDH, RSA), which are based on specifications in CNSSP 15 (Use of Public Standards for Secure Information Sharing).
 
-This script is meant to be operated directly from CLI input; all options are specified inline.
-
-**ECDSA Generation**
+### ECDSA Generation
 `./tcra.sh <input-file> ecdsa`
 
-**ECDH Generation**
+### ECDH Generation
 `./tcra.sh <input-file> ecdh`
 
-**RSA Generation**
+### RSA Generation
 `./tcra.sh <input-file> rsa`
 
 ## License & Credits
