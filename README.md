@@ -10,7 +10,8 @@ A custom client designed to perform registration authority functions utilizing t
 ## License & Credits
 
 ### Author
-**Tony Cavella** <tony@cavella.com>
+**Tony Cavella** 
+<tony@cavella.com>
 
 (https://github.com/acavella/trustedcore-ra)
 
