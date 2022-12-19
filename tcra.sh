@@ -19,7 +19,10 @@ dtgf=$(date '+%Y%m%d-%H%M%S')
 ver=$(<VERSION)
 config="${__conf}""/tcra.conf"
 log="${__dir}""/log/revoke-""${dtgf}"".log"
-input=${1}
+arg1=${1}
+arg2=${2}
+arg3=${3}
+
 
 startup() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info]  Trusted Core: RA v${ver} started" >> $log
@@ -34,11 +37,11 @@ startup() {
     fi
 }
 
-gen_ecdsa_csr() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Reading input file to memory, ${input}" >> $log
-    local subject=$(cat ${input})
-    local filesize=$(stat --format=%s "${input}")
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed reading input file, ${filesize} bytes, ${input}" >> $log
+gen_ecdsa() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Reading input file to memory, ${arg1}" >> $log
+    local subject=$(cat ${arg1})
+    local filesize=$(stat --format=%s "${arg1}")
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed reading input file, ${filesize} bytes, ${arg1}" >> $log
     echo $filesize
     local counter=0
 
@@ -50,6 +53,8 @@ gen_ecdsa_csr() {
         local csr="${outputdir}/${i}.csr"
         local pkey="${outputdir}/${i}.key"
         local p7b="${outputdir}/${i}.p7b"
+        local pre="-----BEGIN PKCS7-----"
+        local post="-----END PKCS7-----"
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Creating directory" >> $log
         mkdir ${outputdir}
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Directory created, ${outputdir}" >> $log
@@ -62,10 +67,23 @@ gen_ecdsa_csr() {
         openssl req -new -key "${outputdir}/${i}.key" -nodes -out ${csr} -sha384 -subj "/CN=${i}/" -config "${__conf}/ecdsa.cnf"
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#10 CSR generated, ${i}.csr" >> $log
 
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating temporary files" >> $log
         local tempreq=$(mktemp /tmp/temp.XXXXXXXXX)
+        local tempout=$(mktemp /tmp/temp.XXXXXXXXX)
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating temporary files" >> $log
+
+        if
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Transmitting request to CA" >> $log
         local p10request=$(sed -e '2,$!d' -e '$d' ${csr})
         echo "action=enrollKey&ca=${ecdsaprofile}&request=${p10request}" > ${tempreq}
-        curl ${caecc} --cert ${clientcert} -v -o ${p7b} --cacert ${cacert} --data-binary @${tempreq} --tlsv1.2
+        curl ${caecc} --cert ${clientcert} -v -o ${tempout} --cacert ${cacert} --data-binary @${tempreq} --tlsv1.2
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Signed certificate output received from CA" >> $log
+        
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#7" >> $log
+        echo ${pre} > ${p7b}
+        tr --delete '\n' < ${tempout} | cut -c 156-  >> ${p7b}
+        echo ${post} >> ${p7b}
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" >> $log
 
         counter=$(( counter + 1 ))
     done
@@ -75,6 +93,8 @@ gen_ecdsa_csr() {
 startup
 gen_ecdsa_csr
 
-echo $input
+echo $arg1
+echo $arg2
+echo $arg3
 
 exit 0
