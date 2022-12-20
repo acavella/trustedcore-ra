@@ -177,13 +177,9 @@ gen_rsa() {
         mkdir ${outputdir}
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Directory created, ${outputdir}" | tee ${log}
 
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key for ${i}" | tee ${log}
-        openssl ecparam -name secp384r1 -genkey -noout -out ${pkey}
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Private key generated, ${i}.key" | tee ${log}
-
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#10 CSR for ${i}" | tee ${log}
-        openssl req -new -key "${outputdir}/${i}.key" -nodes -out ${csr} -sha384 -subj "/CN=${i}/" -config "${__conf}/rsa.cnf"
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#10 CSR generated, ${i}.csr" | tee ${log}
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key and csr for ${i}" | tee ${log}
+        openssl req -new -newkey rsa:4096 -nodes -keyout ${pkey} -out ${csr} -sha384 -subj "/CN=${i}/" -config "${__conf}/rsa.cnf"
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Key and CSR generated for, ${i}" | tee ${log}
 
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating temporary files" | tee ${log}
         local tempreq=$(mktemp /tmp/temp.XXXXXXXXX)
