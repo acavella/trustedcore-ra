@@ -35,6 +35,13 @@ startup() {
         source $config
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Configuration file loaded sucessfully, ${config}" >> $log
     fi
+    if [ -f $arg1 ]
+    then
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Input file located" >> $log
+    else
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Input file missing" >> $log
+        exit 1
+    fi
 }
 
 gen_ecdsa() {
@@ -72,29 +79,41 @@ gen_ecdsa() {
         local tempout=$(mktemp /tmp/temp.XXXXXXXXX)
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating temporary files" >> $log
 
-        if
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Transmitting request to CA" >> $log
-        local p10request=$(sed -e '2,$!d' -e '$d' ${csr})
-        echo "action=enrollKey&ca=${ecdsaprofile}&request=${p10request}" > ${tempreq}
-        curl ${caecc} --cert ${clientcert} -v -o ${tempout} --cacert ${cacert} --data-binary @${tempreq} --tlsv1.2
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Signed certificate output received from CA" >> $log
+        if [[ $arg3 == "sign" ]]
+        then
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Transmitting request to CA" >> $log
+            local p10request=$(sed -e '2,$!d' -e '$d' ${csr})
+            echo "action=enrollKey&ca=${ecdsaprofile}&request=${p10request}" > ${tempreq}
+            curl ${caecc} --cert ${clientcert} -v -o ${tempout} --cacert ${cacert} --data-binary @${tempreq} --tlsv1.2
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Signed certificate output received from CA" >> $log
         
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#7" >> $log
-        echo ${pre} > ${p7b}
-        tr --delete '\n' < ${tempout} | cut -c 156-  >> ${p7b}
-        echo ${post} >> ${p7b}
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" >> $log
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#7" >> $log
+            echo ${pre} > ${p7b}
+            tr --delete '\n' < ${tempout} | cut -c 156-  >> ${p7b}
+            echo ${post} >> ${p7b}
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" >> $log
+        fi
 
         counter=$(( counter + 1 ))
     done
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating ${counter} private key and csr pairs" >> $log
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating ${counter} key pairs" >> $log
 }
 
 startup
-gen_ecdsa_csr
 
-echo $arg1
-echo $arg2
-echo $arg3
+if [[ $arg2 == "ecdsa" ]]
+then
+    gen_ecdsa
+fi
+
+if [[ $arg2 == "ecdh" ]]
+then
+    gen_ecdh
+fi
+
+if [[ $arg2 == "rsa" ]]
+then
+    gen_rsa
+fi
 
 exit 0
