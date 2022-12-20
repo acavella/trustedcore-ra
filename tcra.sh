@@ -30,16 +30,19 @@ startup() {
     if [ ! -e $config ]
     then
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Configuration file missing" >> $log
+        echo "[error] Configuration file missing, exiting"
         exit 1
     else
         source $config
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Configuration file loaded sucessfully, ${config}" >> $log
     fi
+
     if [ -f $arg1 ]
     then
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Input file located" >> $log
     else
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Input file missing" >> $log
+        echo "[error] Input file missing, exiting"
         exit 1
     fi
 }
