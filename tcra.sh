@@ -21,7 +21,7 @@ config="${__conf}""/tcra.conf"
 log="${__dir}""/log/revoke-""${dtgf}"".log"
 arg1=${1}
 arg2=${2}
-arg3=${3}
+arg3=${3:-default}
 
 
 startup() {
@@ -61,6 +61,7 @@ gen_ecdsa() {
         local csr="${outputdir}/${i}.csr"
         local pkey="${outputdir}/${i}.key"
         local p7b="${outputdir}/${i}.p7b"
+        local p12="${outputdir}/${i}.p12"
         local pre="-----BEGIN PKCS7-----"
         local post="-----END PKCS7-----"
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Creating directory" | tee ${log}
@@ -93,11 +94,23 @@ gen_ecdsa() {
             tr --delete '\n' < ${tempout} | cut -c 156-  >> ${p7b}
             echo ${post} >> ${p7b}
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
+
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating random password, >112bits" | tee ${log}
+            local ranpass=$(openssl rand -base64 14)
+            cat ${ranpass} > ${outputdir}/${i}_pass.txt
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Random password generated" | tee ${log}
+
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#12" | tee ${log}
+            local result=$(mktemp /tmp/temp.XXXXXXXXX)
+            openssl pkcs7 -in ${p7b} -inform DER -out ${result} -print_certs
+            openssl pkcs12 -export -inkey ${pkey} -in ${result} -name eud-${i} -out ${p12} -passout pass:pkcs12 ${ranpass}
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
         fi
 
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Cleanup temporary files" | tee ${log}
         rm -f ${tempreq}
         rm -f ${tempout}
+        rm -f ${result}
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed temporary file cleanup" | tee ${log}
 
         counter=$(( counter + 1 ))
@@ -121,6 +134,7 @@ gen_ecdh() {
         local csr="${outputdir}/${i}.csr"
         local pkey="${outputdir}/${i}.key"
         local p7b="${outputdir}/${i}.p7b"
+        local p12="${outputdir}/${i}.p12"
         local pre="-----BEGIN PKCS7-----"
         local post="-----END PKCS7-----"
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Creating directory" | tee ${log}
@@ -153,11 +167,23 @@ gen_ecdh() {
             tr --delete '\n' < ${tempout} | cut -c 156-  >> ${p7b}
             echo ${post} >> ${p7b}
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
+
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating random password, >112bits" | tee ${log}
+            local ranpass=$(openssl rand -base64 14)
+            cat ${ranpass} > ${outputdir}/${i}_pass.txt
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Random password generated" | tee ${log}
+
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#12" | tee ${log}
+            local result=$(mktemp /tmp/temp.XXXXXXXXX)
+            openssl pkcs7 -in ${p7b} -inform DER -out ${result} -print_certs
+            openssl pkcs12 -export -inkey ${pkey} -in ${result} -name eud-${i} -out ${p12} -passout pass:pkcs12 ${ranpass}
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
         fi
 
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Cleanup temporary files" | tee ${log}
         rm -f ${tempreq}
         rm -f ${tempout}
+        rm -f ${result}
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed temporary file cleanup" | tee ${log}
 
         counter=$(( counter + 1 ))
@@ -181,6 +207,7 @@ gen_rsa() {
         local csr="${outputdir}/${i}.csr"
         local pkey="${outputdir}/${i}.key"
         local p7b="${outputdir}/${i}.p7b"
+        local p12="${outputdir}/${i}.p12"
         local pre="-----BEGIN PKCS7-----"
         local post="-----END PKCS7-----"
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Creating directory" | tee ${log}
@@ -209,11 +236,23 @@ gen_rsa() {
             tr --delete '\n' < ${tempout} | cut -c 156-  >> ${p7b}
             echo ${post} >> ${p7b}
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
+
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating random password, >112bits" | tee ${log}
+            local ranpass=$(openssl rand -base64 14)
+            cat ${ranpass} > ${outputdir}/${i}_pass.txt
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Random password generated" | tee ${log}
+
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#12" | tee ${log}
+            local result=$(mktemp /tmp/temp.XXXXXXXXX)
+            openssl pkcs7 -in ${p7b} -inform DER -out ${result} -print_certs
+            openssl pkcs12 -export -inkey ${pkey} -in ${result} -name eud-${i} -out ${p12} -passout pass:pkcs12 ${ranpass}
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
         fi
 
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Cleanup temporary files" | tee ${log}
         rm -f ${tempreq}
         rm -f ${tempout}
+        rm -f ${result}
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed temporary file cleanup" | tee ${log}
 
         counter=$(( counter + 1 ))
