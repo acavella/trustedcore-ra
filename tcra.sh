@@ -49,7 +49,7 @@ startup() {
 gen_ecdsa() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Reading input file to memory, ${arg1}" | tee ${log}
     local subject=$(cat ${arg1})
-    local filesize=$(stat --format=%s "${arg1}")
+    local filesize=$(stat -c %s "${arg1}")
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed reading input file, ${filesize} bytes, ${arg1}" | tee ${log}
     local counter=0
 
