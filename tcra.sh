@@ -105,13 +105,13 @@ gen_ecdsa() {
             local result=$(mktemp /tmp/temp.XXXXXXXXX)
             openssl pkcs7 -in ${p7b} -inform DER -out ${result} -print_certs
             openssl pkcs12 -export -inkey ${pkey} -in ${result} -name eud-${i} -out ${p12} -passout pass:pkcs12 ${ranpass}
+            rm -f ${result}
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
         fi
 
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Cleanup temporary files" | tee ${log}
         rm -f ${tempreq}
         rm -f ${tempout}
-        rm -f ${result}
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed temporary file cleanup" | tee ${log}
 
         counter=$(( counter + 1 ))
@@ -178,13 +178,13 @@ gen_ecdh() {
             local result=$(mktemp /tmp/temp.XXXXXXXXX)
             openssl pkcs7 -in ${p7b} -inform DER -out ${result} -print_certs
             openssl pkcs12 -export -inkey ${pkey} -in ${result} -name eud-${i} -out ${p12} -passout pass:pkcs12 ${ranpass}
+            rm -f ${result}
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
         fi
 
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Cleanup temporary files" | tee ${log}
         rm -f ${tempreq}
         rm -f ${tempout}
-        rm -f ${result}
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed temporary file cleanup" | tee ${log}
 
         counter=$(( counter + 1 ))
@@ -247,13 +247,13 @@ gen_rsa() {
             local result=$(mktemp /tmp/temp.XXXXXXXXX)
             openssl pkcs7 -in ${p7b} -inform DER -out ${result} -print_certs
             openssl pkcs12 -export -inkey ${pkey} -in ${result} -name eud-${i} -out ${p12} -passout pass:pkcs12 ${ranpass}
+            rm -f ${result}
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
         fi
 
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Cleanup temporary files" | tee ${log}
         rm -f ${tempreq}
         rm -f ${tempout}
-        rm -f ${result}
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed temporary file cleanup" | tee ${log}
 
         counter=$(( counter + 1 ))
