@@ -19,6 +19,7 @@ dtgf=$(date '+%Y%m%d-%H%M%S')
 ver=$(<VERSION)
 config="${__conf}""/tcra.conf"
 log="${__dir}""/log/revoke-""${dtgf}"".log"
+start=$(date +%s)
 arg1=${1}
 arg2=${2}
 arg3=${3:-default}
@@ -277,4 +278,7 @@ then
     gen_rsa
 fi
 
+
+end=$(date +%s)
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Operations completed in $(($end-$start)) seconds..." | tee ${log}
 exit 0
