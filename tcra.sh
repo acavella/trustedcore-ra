@@ -221,14 +221,13 @@ gen_rsa() {
         if [[ $arg3 == "sign" ]]
         then
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Transmitting request to CA" | tee ${log}
-            local p10request=$(sed -e '2,$!d' -e '$d' ${csr})
-            echo "action=enrollKey&ca=${ecdsaprofile}&request=${p10request}" > ${tempreq}
-            curl ${caecc} --cert ${clientcert} -v -o ${tempout} --cacert ${cacert} --data-binary @${tempreq} --tlsv1.2
+            local p10request=$(sed -e '2,$!d' -e '$d' ${csr} | tr --delete '\n')
+            curl ${carsa} --cert ${clientcert} -v -o ${tempout} --cacert ${cacert} --data-urlencode "action=enrollKey" --data-urlencode "ca=${rsaprofile}" --data-urlencode "response.cert.format=1" --data-urlencode "request=${p10request}" --tlsv1.2
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Signed certificate output received from CA" | tee ${log}
         
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#7" | tee ${log}
             echo ${pre} > ${p7b}
-            tr --delete '\n' < ${tempout} | cut -c 156-  >> ${p7b}
+            tr --delete '\n' < ${tempout} | sed -n -e 's/^.*base64CertChain=//p'  >> ${p7b}
             echo ${post} >> ${p7b}
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
 
