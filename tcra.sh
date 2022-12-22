@@ -90,19 +90,19 @@ gen_ecdsa() {
         
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#7" | tee ${log}
             echo ${pre} > ${p7b}
-            tr --delete '\n' < ${tempout} | cut -c 156-  >> ${p7b}
+            tr --delete '\n' < ${tempout} | sed -n -e 's/^.*base64CertChain=//p'  | sed 's/\r$//' >> ${p7b}
             echo ${post} >> ${p7b}
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
 
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating random password, >112bits" | tee ${log}
             local ranpass=$(openssl rand -base64 14)
-            cat ${ranpass} > ${outputdir}/${i}_pass.txt
+            echo ${ranpass} > ${outputdir}/${i}_pass.txt
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Random password generated" | tee ${log}
 
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#12" | tee ${log}
             local result=$(mktemp /tmp/temp.XXXXXXXXX)
             openssl pkcs7 -in ${p7b} -inform DER -out ${result} -print_certs
-            openssl pkcs12 -export -inkey ${pkey} -in ${result} -name eud-${i} -out ${p12} -passout pass:pkcs12 ${ranpass}
+            openssl pkcs12 -export -inkey ${pkey} -in ${result} -out ${p12} -passout pass:${ranpass}
             rm -f ${result}
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
         fi
@@ -161,19 +161,19 @@ gen_ecdh() {
         
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#7" | tee ${log}
             echo ${pre} > ${p7b}
-            tr --delete '\n' < ${tempout} | cut -c 156-  >> ${p7b}
+            tr --delete '\n' < ${tempout} | sed -n -e 's/^.*base64CertChain=//p'  | sed 's/\r$//' >> ${p7b}
             echo ${post} >> ${p7b}
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
 
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating random password, >112bits" | tee ${log}
             local ranpass=$(openssl rand -base64 14)
-            cat ${ranpass} > ${outputdir}/${i}_pass.txt
+            echo ${ranpass} > ${outputdir}/${i}_pass.txt
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Random password generated" | tee ${log}
 
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#12" | tee ${log}
             local result=$(mktemp /tmp/temp.XXXXXXXXX)
             openssl pkcs7 -in ${p7b} -inform DER -out ${result} -print_certs
-            openssl pkcs12 -export -inkey ${pkey} -in ${result} -name eud-${i} -out ${p12} -passout pass:pkcs12 ${ranpass}
+            openssl pkcs12 -export -inkey ${pkey} -in ${result} -out ${p12} -passout pass:${ranpass}
             rm -f ${result}
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
         fi
