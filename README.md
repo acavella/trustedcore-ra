@@ -30,9 +30,13 @@ $ git clone https://github.com/acavella/trustedcore-ra.git
 $ cp ca-root.pem ~
 $ cp rami-client.pfx ~
 ```
-3. Using OpenSSL, convert the certificate files to PEM format:
+3. Using OpenSSL, convert the client PKCS12 certificate to PEM format:
 ```shell
-$ openssl pkcs12 -in -out
+$ openssl pkcs12 -in <p12 file> -out ~/trustedcore-ra-main/cert/client.pem -nodes
+```
+4. Using OpenSSL, convert the trustchain from DER to PEM format (if trustchain is already PEM this can be skipped):
+```shell
+$ openssl x509 –inform der –in <root cert> -out ~/trustedcore-ra-main/cert/ca-trust.pem
 ```
 
 ## Usage
