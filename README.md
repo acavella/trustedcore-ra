@@ -32,11 +32,27 @@ $ cp rami-client.pfx ~
 ```
 3. Using OpenSSL, convert the client PKCS12 certificate to PEM format:
 ```shell
-$ openssl pkcs12 -in <p12 file> -out ~/trustedcore-ra-main/cert/client.pem -nodes
+$ openssl pkcs12 -in <p12 file> -out <install directory>/cert/client.pem -nodes
 ```
 4. Using OpenSSL, convert the trustchain from DER to PEM format (if trustchain is already PEM this can be skipped):
 ```shell
-$ openssl x509 –inform der –in <root cert> -out ~/trustedcore-ra-main/cert/ca-trust.pem
+$ openssl x509 –inform der –in <root cert> -out <install directory>/cert/ca-trust.pem
+```
+5. Edit `<install directory>/conf/local.conf` and set parameters to match your local environment:
+```shell
+<pre>
+<b>local.conf</b>
+</pre>
+
+ clientcert="/home/acavella/.ssl/certs/rami.crt"
+cacert=""
+
+caecc="https://tlsldc405.red.bah-csfc.lab/ca/i11"
+ecdsaprofile="x11-ecdsa"
+ecdhprofile="x11-ecdh"
+
+carsa="https://tlsldc405.red.bah-csfc.lab/ca/i11"
+rsaprofile="x11-rsa"
 ```
 
 ## Usage
