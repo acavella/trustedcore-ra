@@ -89,9 +89,9 @@ gen_ecdsa() {
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Signed certificate output received from CA" | tee ${log}
         
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#7" | tee ${log}
-            echo ${pre} > ${p7b}
+            echo -e ${pre} > ${p7b}
             tr --delete '\n' < ${tempout} | sed -n -e 's/^.*base64CertChain=//p'  | sed 's/\r$//' >> ${p7b}
-            echo ${post} >> ${p7b}
+            echo -e ${post} >> ${p7b}
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
 
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating random password, >112bits" | tee ${log}
@@ -160,9 +160,9 @@ gen_ecdh() {
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Signed certificate output received from CA" | tee ${log}
         
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#7" | tee ${log}
-            echo ${pre} > ${p7b}
+            echo -e ${pre} > ${p7b}
             tr --delete '\n' < ${tempout} | sed -n -e 's/^.*base64CertChain=//p'  | sed 's/\r$//' >> ${p7b}
-            echo ${post} >> ${p7b}
+            echo -e ${post} >> ${p7b}
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
 
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating random password, >112bits" | tee ${log}
@@ -226,9 +226,9 @@ gen_rsa() {
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Signed certificate output received from CA" | tee ${log}
         
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#7" | tee ${log}
-            echo ${pre} > ${p7b}
+            echo -e ${pre} > ${p7b}
             tr --delete '\n' < ${tempout} | sed -n -e 's/^.*base64CertChain=//p'  | sed 's/\r$//' >> ${p7b}
-            echo ${post} >> ${p7b}
+            echo -e ${post} >> ${p7b}
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
 
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating random password, >112bits" | tee ${log}
