@@ -58,7 +58,7 @@ startup() {
         if ( $? -eq 1 ); then
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Command ${req} was found" | tee ${log}
         else
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Command ${req} was not found, exiting" | tee ${log}
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Command ${req} was not found, exiting" | tee ${log}
             exit 1
         fi
     done
