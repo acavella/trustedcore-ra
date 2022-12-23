@@ -25,7 +25,7 @@ This script requires no `root` privileges and is designed to be run from the use
 $ cd ~
 $ git clone https://github.com/acavella/trustedcore-ra.git
 ```
-2. Copy ca trust and client (RAMI) certificates to you home directory:
+2. Copy ca trust and client (RAMI) certificates to your home directory:
 ```shell
 $ cp ca-root.pem ~
 $ cp rami-client.pfx ~
