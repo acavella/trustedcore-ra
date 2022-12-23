@@ -20,10 +20,18 @@ ver=$(<VERSION)
 config="${__conf}""/local.conf"
 log="${__dir}""/log/revoke-""${dtgf}"".log"
 start=$(date +%s)
+reqs=("openssl" "curl" "sed")
 arg1=${1}
 arg2=${2}
 arg3=${3:-default}
 
+is_command() {
+    # Checks to see if the given command (passed as a string argument) exists on the system.
+    # The function returns 0 (success) if the command exists, and 1 if it doesn't.
+    local check_command="$1"
+
+    command -v "${check_command}" >/dev/null 2>&1
+}
 
 startup() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info]  Trusted Core: RA v${ver} started" | tee ${log}
@@ -44,6 +52,16 @@ startup() {
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Input file missing" | tee ${log}
         exit 1
     fi
+
+    for req in ${reqs[@]}; do 
+        is_command ${req}
+        if ( $? -eq 1 ); then
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Command ${req} was found" | tee ${log}
+        else
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Command ${req} was not found, exiting" | tee ${log}
+            exit 1
+        fi
+    done
 }
 
 gen_ecdsa() {
