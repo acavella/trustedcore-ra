@@ -40,19 +40,17 @@ $ openssl x509 –inform der –in <root cert> -out <install directory>/cert/ca-
 ```
 5. Edit `<install directory>/conf/local.conf` and set parameters to match your local environment:
 ```shell
-<pre>
-<b>local.conf</b>
-</pre>
+local.conf
 
- clientcert="/home/acavella/.ssl/certs/rami.crt"
-cacert=""
+clientcert="<install directory>/cert/client.pem"
+cacert="<install directory>/cert/ca-trust.pem"
 
-caecc="https://tlsldc405.red.bah-csfc.lab/ca/i11"
-ecdsaprofile="x11-ecdsa"
-ecdhprofile="x11-ecdh"
+caecc="https://tlsldc405.example.com/ca/x11"
+ecdsaprofile="x11ecdsa"
+ecdhprofile="x11ecdh"
 
-carsa="https://tlsldc405.red.bah-csfc.lab/ca/i11"
-rsaprofile="x11-rsa"
+carsa="https://tlsldc405.example.com/ca/x11"
+rsaprofile="x11rsa"
 ```
 
 ## Usage
