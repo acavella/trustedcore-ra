@@ -54,21 +54,10 @@ rsaprofile="x11rsa"
 ```
 
 ## Usage
-This script is meant to be operated directly from CLI; all options are specified inline. The first operator is an input file which consists of a lists of Common Names (CN) to be used in the generation of PKCS#10 Certificate Signing Requests (CSR). The second operator is certificate specification (ECDSA, ECDH, RSA), which are based on specifications in CNSSP 15 (Use of Public Standards for Secure Information Sharing).
+This script is meant to be operated directly from CLI; all options are specified inline. The first argument is an input file which consists of a lists of Common Names (CN) to be used in the generation of PKCS#10 Certificate Signing Requests (CSR). The second argument is certificate specification (ECDSA, ECDH, RSA), which are based on specifications in CNSSP 15 (Use of Public Standards for Secure Information Sharing). The third argument specifies whether the script interacts with the RAMI API and submits the certificate signing request to the CA. If not specified, the script creates a private key and certificate signing request in an offline only mode; allowing the operator to manually submit / sign the generated CSRs. All files generated will be saved within `<install directory>/output/<named dir>`.
 
-### ECDSA Generation
 ```shell
-$ ./tcra.sh <input-file> ecdsa
-```
-
-### ECDH Generation
-```shell
-$ ./tcra.sh <input-file> ecdh
-```
-
-### RSA Generation
-```shell
-$ ./tcra.sh <input-file> rsa
+$ ./tcra.sh <input-file> [ecdsa|ecdh|rsa] [sign]
 ```
 
 ## License & Credits
