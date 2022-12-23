@@ -1,5 +1,5 @@
 # Trusted Core: RA
-A custom registration authority client to be used with the ISC CertAgent RAMI API, which allows for the automated generation of single or bulk x.509 certificates. This script assumes the user has familiarity of manual operation of ISC CertAgent, is familiar with the RAMI API and its client certificates and trustchains.
+A custom registration authority client to be used with the ISC CertAgent RAMI API, which allows for the automated generation of single or bulk x.509 certificates. This script assumes the user has some familiarity with manual operation of ISC CertAgent, is familiar with the RAMI API and its client certificates and trustchains.
 
 ## Prerequisites
 
