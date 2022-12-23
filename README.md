@@ -12,7 +12,7 @@ A custom registration authority client to be used with the ISC CertAgent RAMI AP
 - ISC CertAgent 7.0.9.x
 - RAMI API Configured 
 
-### References
+## References
 
 - ISC CertAgent 7.0.9.x Installation Guide
 - [RFC 5280](https://www.rfc-editor.org/rfc/rfc5280)
