@@ -3,9 +3,14 @@ A custom registration authority client to be used with the ISC CertAgent RAMI AP
 
 ## Prerequisites
 
+### Client
 - Bash
 - OpenSSL
 - Curl
+
+### Certificate Authority / Server
+- ISC CertAgent 7.0.9.x
+- RAMI API Configured 
 
 ### References
 
