@@ -13,6 +13,19 @@ A custom registration authority client to be used with the ISC CertAgent RAMI AP
 - [RFC 5280](https://www.rfc-editor.org/rfc/rfc5280)
 
 ## Installation
+This script requires no `root` privileges and is designed to be run from the user's home directory. 
+
+1. Clone latest from Github:
+```shell
+$ cd ~
+$ git clone https://github.com/acavella/trustedcore-ra.git
+```
+2. Retrieve ca trust and client (RAMI) certificates:
+```shell
+$ cp ca-root.pem ~
+$ cp rami-client.pfx ~
+```
+3. Use OpenSSL to convert certificate files to PEM:
 
 ## Usage
 This script is meant to be operated directly from CLI; all options are specified inline. The first operator is an input file which consists of a lists of Common Names (CN) to be used in the generation of PKCS#10 Certificate Signing Requests (CSR). The second operator is certificate specification (ECDSA, ECDH, RSA), which are based on specifications in CNSSP 15 (Use of Public Standards for Secure Information Sharing).
