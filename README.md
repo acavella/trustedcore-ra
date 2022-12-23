@@ -20,12 +20,15 @@ This script requires no `root` privileges and is designed to be run from the use
 $ cd ~
 $ git clone https://github.com/acavella/trustedcore-ra.git
 ```
-2. Retrieve ca trust and client (RAMI) certificates:
+2. Copy ca trust and client (RAMI) certificates to you home directory:
 ```shell
 $ cp ca-root.pem ~
 $ cp rami-client.pfx ~
 ```
-3. Use OpenSSL to convert certificate files to PEM:
+3. Using OpenSSL, convert the certificate files to PEM format:
+```shell
+$ openssl pkcs12 -in -out
+```
 
 ## Usage
 This script is meant to be operated directly from CLI; all options are specified inline. The first operator is an input file which consists of a lists of Common Names (CN) to be used in the generation of PKCS#10 Certificate Signing Requests (CSR). The second operator is certificate specification (ECDSA, ECDH, RSA), which are based on specifications in CNSSP 15 (Use of Public Standards for Secure Information Sharing).
