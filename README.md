@@ -59,7 +59,7 @@ This script is meant to be operated directly from CLI; all options are specified
 ```shell
 $ ./tcra.sh <input-file> [ecdsa|ecdh|rsa] [sign]
 ```
-![Trusted Core: RA Bulk Generation of Keys and CSRS](assets/trustedcore-ra-bulk.gif 'Trusted Core: RA Bulk Generation of Keys and CSRS')
+![Trusted Core: RA Bulk Generation of Keys and CSRS](https://github.com/acavella/trustedcore-ra/blob/33589a80acc0d41654e8a3f6cc9b60f8108470be/assets/trustedcore-ra-bulkrsa.gif 'Trusted Core: RA')
 
 ## License & Credits
 
