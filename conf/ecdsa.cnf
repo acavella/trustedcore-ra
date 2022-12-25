@@ -19,7 +19,7 @@ prompt			= no
 # The extensions to add to a certificate request - see [ v3_req ]
 req_extensions		= v3_req
 
-# This extension ensures fields are written in PrintableString.
+# This extension ensures fields are written in PrintableString .
 string_mask         = nombstr
 
 [ req_attributes ]
