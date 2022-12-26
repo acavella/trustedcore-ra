@@ -274,21 +274,21 @@ gen_rsa() {
 
 startup
 
-if [[ $arg2 == "ecdsa" ]]
-then
-    gen_ecdsa
-fi
+case ${arg2} in
+    
+    ecdsa)
+    gen_ecdsa;;
 
-if [[ $arg2 == "ecdh" ]]
-then
-    gen_ecdh
-fi
+    ecdh)
+    gen_ecdh;;
 
-if [[ $arg2 == "rsa" ]]
-then
-    gen_rsa
-fi
+    rsa)
+    gen_rsa;;
 
+    *)
+    display_help
+    exit 1;;
+esac
 
 end=$(date +%s)
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Operations completed in $(($end-$start)) seconds..." | tee ${log}
