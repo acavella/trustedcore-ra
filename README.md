@@ -38,7 +38,7 @@ $ openssl pkcs12 -in <p12 file> -out <install directory>/cert/client.pem -nodes
 ```shell
 $ openssl x509 –inform der –in <root cert> -out <install directory>/cert/ca-trust.pem
 ```
-5. Edit `<install directory>/conf/local.conf` and set parameters to match your local environment:
+5. Edit `<install-directory>/conf/local.conf` and set parameters to match your local environment:
 ```shell
 local.conf
 
@@ -56,7 +56,7 @@ rsaprofile="x11rsa"
 ## Usage
 This script is meant to be operated directly from CLI; all options are specified as inline arguments. The first argument is an input file which consists of a lists of Common Names (CN) to be used in the generation of PKCS#10 Certificate Signing Requests (CSR). The input file can be any plain-text file which lists a single CN per line, an example can be found in the input directory.
 
-The second argument is certificate specification (ECDSA, ECDH, RSA), which are based on specifications in CNSSP 15 (Use of Public Standards for Secure Information Sharing). The third argument specifies whether the script interacts with the RAMI API and submits the certificate signing request to the CA. If not specified, the script creates a private key and certificate signing request in an offline only mode; allowing the operator to manually submit / sign the generated CSRs. All files generated will be saved within `<install directory>/output/<named dir>`.
+The second argument is certificate specification (ECDSA, ECDH, RSA), which are based on specifications in CNSSP 15 (Use of Public Standards for Secure Information Sharing). The third argument specifies whether the script interacts with the RAMI API and submits the certificate signing request to the CA. If not specified, the script creates a private key and certificate signing request in an offline only mode; allowing the operator to manually submit / sign the generated CSRs. All files generated will be saved within `<install-directory>/output/<named dir>`.
 
 ```shell
 $ ./tcra.sh <input-file> [ecdsa|ecdh|rsa] [sign]
