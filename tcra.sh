@@ -178,42 +178,42 @@ main() {
 
         if [[ $arg3 == "sign" ]]
         then
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Transmitting request to CA" | tee ${log}
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Transmitting request to CA"
             local p10request=$(sed -e '2,$!d' -e '$d' ${csr})
             echo "action=enrollKey&ca=${ecdsaprofile}&request=${p10request}" > ${tempreq}
             curl ${caecc} --cert ${clientcert} -v -o ${tempout} --cacert ${cacert} --data-binary @${tempreq} --tlsv1.2
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Signed certificate output received from CA" | tee ${log}
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Signed certificate output received from CA"
         
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#7" | tee ${log}
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#7"
             echo -e ${pre} > ${p7b}
             tr --delete '\n' < ${tempout} | sed -n -e 's/^.*base64CertChain=//p'  | sed 's/\r$//' >> ${p7b}
             echo -e ${post} >> ${p7b}
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated"
 
             generate_random_password
 
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#12" | tee ${log}
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#12"
             local result=$(mktemp /tmp/temp.XXXXXXXXX)
             openssl pkcs7 -in ${p7b} -inform DER -out ${result} -print_certs
             openssl pkcs12 -export -inkey ${pkey} -in ${result} -out ${p12} -passout pass:${ranpass}
             rm -f ${result}
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated"
         fi
 
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Cleanup temporary files" | tee ${log}
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Cleanup temporary files"
         rm -f ${tempreq}
         rm -f ${tempout}
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed temporary file cleanup" | tee ${log}
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed temporary file cleanup"
 
         counter=$(( counter + 1 ))
     done
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating ${counter} key pairs" | tee ${log}
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating ${counter} key pairs"
 }
 
 gen_ecdh() {
     local counter=0
 
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key and csr for each subject" | tee ${log}
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key and csr for each subject"
     for i in $subject
     do 
         local outputdir="${__dir}/output/${i}"
