@@ -102,7 +102,7 @@ make_output_directory() {
 generate_private_key() {
     if [[ ${arg2} == "rsa" ]]; then 
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key for ${cn}"
-        openssl genrsa -out ${pkey} 3072
+        openssl genrsa -out ${pkey} 4096
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Private key generated, ${pkey}"
     else
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key for ${cn}"
