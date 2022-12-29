@@ -87,14 +87,28 @@ start() {
 }
 
 read_input() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Reading input file to memory, ${arg1}" | tee ${log}
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Reading input file to memory, ${arg1}"
     local filesize=$(stat -c %s "${arg1}")
     subject=$(cat ${arg1})
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed reading input file, ${filesize} bytes, ${arg1}" | tee ${log}
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed reading input file, ${filesize} bytes, ${arg1}"
 }
 
-make_outputdir() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Creating directory" | tee ${log}
+make_output_directory() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Creating output directory"
+    mkdir ${1}
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Directory created, ${1}"
+}
+
+generate_private_key() {
+    if [[ ${arg2} == "rsa" ]]; then 
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key for ${cn}"
+        openssl genrsa -out ${pkey} 3072
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Private key generated, ${pkey}"
+    else
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key for ${cn}"
+        openssl ecparam -name secp384r1 -genkey -noout -out ${pkey}
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Private key generated, ${pkey}"
+    fi
 }
 
 sign_cert() {}
@@ -107,9 +121,10 @@ main() {
 
     local counter=0
 
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key and csr for each subject" | tee ${log}
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key and csr for each subject"
     for i in $subject; do 
 
+        local cn="${i}"
         local outputdir="${__dir}/output/${i}"
         local csr="${outputdir}/${i}.csr"
         local pkey="${outputdir}/${i}.key"
@@ -118,13 +133,9 @@ main() {
         local pre="-----BEGIN PKCS7-----"
         local post="-----END PKCS7-----"
 
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Creating directory" | tee ${log}
-        mkdir ${outputdir}
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Directory created, ${outputdir}" | tee ${log}
+        make_output_directory ${outputdir}
 
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key for ${i}" | tee ${log}
-        openssl ecparam -name secp384r1 -genkey -noout -out ${pkey}
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Private key generated, ${i}.key" | tee ${log}
+        generate_private_key
 
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#10 CSR for ${i}" | tee ${log}
         openssl req -new -key "${outputdir}/${i}.key" -nodes -out ${csr} -sha384 -subj "/CN=${i}" -config "${__conf}/ecdsa.cnf"
