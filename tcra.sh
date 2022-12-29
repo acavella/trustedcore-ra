@@ -38,14 +38,14 @@ make_temporary_log() {
     TEMPLOG=$(mktemp /tmp/tcra_temp.XXXXXX)
     # Open handle 3 for templog
     # https://stackoverflow.com/questions/18460186/writing-outputs-to-log-file-and-console
-    exec 3>"$TEMPLOG"
+    exec 3>${TEMPLOG}
     # Delete templog, but allow for addressing via file handle
     # This lets us write to the log without having a temporary file on the drive, which
     # is meant to be a security measure so there is not a lingering file on the drive during the install process
-    rm "$TEMPLOG"
+    rm ${TEMPLOG}
 }
 
-copy_to_install_log() {
+copy_to_run_log() {
     # Copy the contents of file descriptor 3 into the log
     cat /proc/$$/fd/3 > "${log}"
     chmod 644 "${log}"
@@ -321,4 +321,9 @@ esac
 
 end=$(date +%s)
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Operations completed in $(($end-$start)) seconds..." | tee ${log}
+
+make_temporary_log
+main | tee -a /proc/$$/fd/3
+copy_to_run_log
+
 exit 0
