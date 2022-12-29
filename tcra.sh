@@ -106,11 +106,11 @@ generate_private_key() {
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Private key generated, ${pkey}"
     elif [[ ${arg2} == "ecdsa" ]]; then
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key for ${cn}"
-        openssl ecparam -name secp384r1 -genkey -noout -out ${pkey}
+        openssl ecparam -name secp384r1 -genkey -noout -out "${pkey}"
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Private key generated, ${pkey}"
     elif [[ ${arg2} == "ecdh" ]]; then
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key for ${cn}"
-        openssl ecparam -name secp384r1 -genkey -noout -out ${pkey}
+        openssl ecparam -name secp384r1 -genkey -noout -out "${pkey}"
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Private key generated, ${pkey}"
     else
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Unrecognized argument, ${arg2}, exiting."
@@ -124,13 +124,13 @@ generate_csr() {
         openssl genrsa -out ${pkey} 4096
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Private key generated, ${pkey}"
     elif [[ ${arg2} == "ecdsa" ]]; then
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key for ${cn}"
-        openssl ecparam -name secp384r1 -genkey -noout -out ${pkey}
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Private key generated, ${pkey}"
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#10 CSR for ${cn}}"
+        openssl req -new -key "${pkey}" -nodes -out "${csr}" -sha384 -subj "/CN=${cn}" -config "${__conf}/ecdsa.cnf"
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#10 CSR generated, ${csr}"
     elif [[ ${arg2} == "ecdh" ]]; then
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key for ${cn}"
-        openssl ecparam -name secp384r1 -genkey -noout -out ${pkey}
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Private key generated, ${pkey}"
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#10 CSR for ${cn}"
+        openssl req -new -key "${pkey}" -nodes -out "${csr}" -sha384 -subj "/CN=${cn}" -config "${__conf}/ecdh.cnf"
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#10 CSR generated, ${csr}"
     else
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Unrecognized argument, ${arg2}, exiting."
         exit 1
@@ -163,9 +163,9 @@ main() {
 
         generate_private_key
 
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#10 CSR for ${i}" | tee ${log}
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#10 CSR for ${i}"
         openssl req -new -key "${outputdir}/${i}.key" -nodes -out ${csr} -sha384 -subj "/CN=${i}" -config "${__conf}/ecdsa.cnf"
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#10 CSR generated, ${i}.csr" | tee ${log}
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#10 CSR generated, ${i}.csr"
 
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating temporary files" | tee ${log}
         local tempreq=$(mktemp /tmp/temp.XXXXXXXXX)
