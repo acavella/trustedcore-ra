@@ -162,6 +162,8 @@ main() {
         local pkey="${outputdir}/${cn}.key"
         local p7b="${outputdir}/${cn}.p7b"
         local p12="${outputdir}/${cn}.p12"
+        local tempreq=$(mktemp /tmp/temp.XXXXXXXXX)
+        local tempout=$(mktemp /tmp/temp.XXXXXXXXX)
         local pre="-----BEGIN PKCS7-----"
         local post="-----END PKCS7-----"
 
@@ -171,17 +173,12 @@ main() {
 
         generate_csr
 
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating temporary files"
-        local tempreq=$(mktemp /tmp/temp.XXXXXXXXX)
-        local tempout=$(mktemp /tmp/temp.XXXXXXXXX)
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating temporary files"
-
         if [[ $arg3 == "sign" ]]
         then
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Transmitting request to CA"
-            local p10request=$(sed -e '2,$!d' -e '$d' ${csr})
-            echo "action=enrollKey&ca=${ecdsaprofile}&request=${p10request}" > ${tempreq}
-            curl ${caecc} --cert ${clientcert} -v -o ${tempout} --cacert ${cacert} --data-binary @${tempreq} --tlsv1.2
+            local p10request=$(sed -e '2,$!d' -e '$d' ${csr} | tr --delete '\n')
+            curl ${carsa} --cert ${clientcert} -v -o ${tempout} --cacert ${cacert} --data-urlencode "action=enrollKey" \
+            --data-urlencode "ca=${rsaprofile}" --data-urlencode "response.cert.format=1" --data-urlencode "request=${p10request}" --tlsv1.2
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Signed certificate output received from CA"
         
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#7"
@@ -208,88 +205,9 @@ main() {
         counter=$(( counter + 1 ))
     done
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating ${counter} key pairs"
+    end=$(date +%s)
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Operations completed in $(($end-$start)) seconds..."
 }
-
-gen_rsa() {
-    local counter=0
-
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key and csr for each subject" | tee ${log}
-    for i in $subject
-    do 
-        local outputdir="${__dir}/output/${i}"
-        local csr="${outputdir}/${i}.csr"
-        local pkey="${outputdir}/${i}.key"
-        local p7b="${outputdir}/${i}.p7b"
-        local p12="${outputdir}/${i}.p12"
-        local pre="-----BEGIN PKCS7-----"
-        local post="-----END PKCS7-----"
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Creating directory" | tee ${log}
-        mkdir ${outputdir}
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Directory created, ${outputdir}" | tee ${log}
-
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key and csr for ${i}" | tee ${log}
-        openssl req -new -newkey rsa:4096 -nodes -keyout ${pkey} -out ${csr} -sha384 -subj "/CN=${i}" -config "${__conf}/rsa.cnf"
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Key and CSR generated for, ${i}" | tee ${log}
-
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating temporary files" | tee ${log}
-        local tempreq=$(mktemp /tmp/temp.XXXXXXXXX)
-        local tempout=$(mktemp /tmp/temp.XXXXXXXXX)
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating temporary files" | tee ${log}
-
-        if [[ $arg3 == "sign" ]]
-        then
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Transmitting request to CA" | tee ${log}
-            local p10request=$(sed -e '2,$!d' -e '$d' ${csr} | tr --delete '\n')
-            curl ${carsa} --cert ${clientcert} -v -o ${tempout} --cacert ${cacert} --data-urlencode "action=enrollKey" --data-urlencode "ca=${rsaprofile}" --data-urlencode "response.cert.format=1" --data-urlencode "request=${p10request}" --tlsv1.2
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Signed certificate output received from CA" | tee ${log}
-        
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#7" | tee ${log}
-            echo -e ${pre} > ${p7b}
-            tr --delete '\n' < ${tempout} | sed -n -e 's/^.*base64CertChain=//p'  | sed 's/\r$//' >> ${p7b}
-            echo -e ${post} >> ${p7b}
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
-
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating random password, >112bits" | tee ${log}
-            local ranpass=$(openssl rand -base64 14)
-            echo ${ranpass} > ${outputdir}/${i}_pass.txt
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Random password generated" | tee ${log}
-
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#12" | tee ${log}
-            local result=$(mktemp /tmp/temp.XXXXXXXXX)
-            openssl pkcs7 -in ${p7b} -inform DER -out ${result} -print_certs
-            openssl pkcs12 -export -inkey ${pkey} -in ${result} -out ${p12} -passout pass:${ranpass}
-            rm -f ${result}
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
-        fi
-
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Cleanup temporary files" | tee ${log}
-        rm -f ${tempreq}
-        rm -f ${tempout}
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed temporary file cleanup" | tee ${log}
-
-        counter=$(( counter + 1 ))
-    done
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating ${counter} key pairs" | tee ${log}
-}
-
-case ${arg2} in
-    
-    ecdsa)
-    gen_ecdsa;;
-
-    ecdh)
-    gen_ecdh;;
-
-    rsa)
-    gen_rsa;;
-
-    *)
-    display_help
-    exit 1;;
-esac
-
-end=$(date +%s)
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Operations completed in $(($end-$start)) seconds..." | tee ${log}
 
 make_temporary_log
 main | tee -a /proc/$$/fd/3
