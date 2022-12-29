@@ -301,8 +301,6 @@ gen_rsa() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating ${counter} key pairs" | tee ${log}
 }
 
-
-
 case ${arg2} in
     
     ecdsa)
