@@ -111,7 +111,9 @@ generate_private_key() {
     fi
 }
 
-sign_cert() {}
+
+
+sign_public_certificate() {}
 
 
 main() {
