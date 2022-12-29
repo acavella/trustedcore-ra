@@ -139,6 +139,13 @@ generate_csr() {
 
 sign_public_certificate() { }
 
+generate_random_password() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating random password, >112bits"
+    local randpass=$(openssl rand -base64 14)
+    echo ${randpass} > ${outputdir}/${cn}_pass.txt
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Random password generated"
+}
+
 
 main() {
     
@@ -148,14 +155,13 @@ main() {
     local counter=0
 
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key and csr for each subject"
-    for i in $subject; do 
+    for cn in $subject; do 
 
-        local cn="${i}"
-        local outputdir="${__dir}/output/${i}"
-        local csr="${outputdir}/${i}.csr"
-        local pkey="${outputdir}/${i}.key"
-        local p7b="${outputdir}/${i}.p7b"
-        local p12="${outputdir}/${i}.p12"
+        local outputdir="${__dir}/output/${cn}"
+        local csr="${outputdir}/${cn}.csr"
+        local pkey="${outputdir}/${cn}.key"
+        local p7b="${outputdir}/${cn}.p7b"
+        local p12="${outputdir}/${cn}.p12"
         local pre="-----BEGIN PKCS7-----"
         local post="-----END PKCS7-----"
 
@@ -184,10 +190,7 @@ main() {
             echo -e ${post} >> ${p7b}
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
 
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating random password, >112bits" | tee ${log}
-            local ranpass=$(openssl rand -base64 14)
-            echo ${ranpass} > ${outputdir}/${i}_pass.txt
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Random password generated" | tee ${log}
+            generate_random_password
 
             echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#12" | tee ${log}
             local result=$(mktemp /tmp/temp.XXXXXXXXX)
