@@ -111,7 +111,7 @@ generate_private_key() {
     fi
 }
 
-
+generate_csr() {}
 
 sign_public_certificate() {}
 
