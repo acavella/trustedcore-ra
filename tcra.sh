@@ -120,9 +120,9 @@ generate_private_key() {
 
 generate_csr() { 
     if [[ ${arg2} == "rsa" ]]; then 
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key for ${cn}"
-        openssl genrsa -out ${pkey} 4096
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Private key generated, ${pkey}"
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key and csr for ${cn}"
+        openssl req -new -key "${pkey}" -nodes -out "${csr}" -sha384 -subj "/CN=${cn}" -config "${__conf}/rsa.cnf"
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Key and CSR generated for, ${cn}"
     elif [[ ${arg2} == "ecdsa" ]]; then
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#10 CSR for ${cn}}"
         openssl req -new -key "${pkey}" -nodes -out "${csr}" -sha384 -subj "/CN=${cn}" -config "${__conf}/ecdsa.cnf"
