@@ -165,10 +165,10 @@ main() {
 
         generate_csr
 
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating temporary files" | tee ${log}
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating temporary files"
         local tempreq=$(mktemp /tmp/temp.XXXXXXXXX)
         local tempout=$(mktemp /tmp/temp.XXXXXXXXX)
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating temporary files" | tee ${log}
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating temporary files"
 
         if [[ $arg3 == "sign" ]]
         then
