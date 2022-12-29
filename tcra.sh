@@ -33,32 +33,54 @@ is_command() {
     command -v "${check_command}" >/dev/null 2>&1
 }
 
-startup() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info]  Trusted Core: RA v${ver} started" | tee ${log}
-    ## CHECK AND LOAD EXTERNAL CONFIG
+make_temporary_log() {
+    # Create a random temporary file for the log
+    TEMPLOG=$(mktemp /tmp/tcra_temp.XXXXXX)
+    # Open handle 3 for templog
+    # https://stackoverflow.com/questions/18460186/writing-outputs-to-log-file-and-console
+    exec 3>"$TEMPLOG"
+    # Delete templog, but allow for addressing via file handle
+    # This lets us write to the log without having a temporary file on the drive, which
+    # is meant to be a security measure so there is not a lingering file on the drive during the install process
+    rm "$TEMPLOG"
+}
+
+copy_to_install_log() {
+    # Copy the contents of file descriptor 3 into the log
+    cat /proc/$$/fd/3 > "${log}"
+    chmod 644 "${log}"
+}
+
+start() {
+    # Print startup and debug information
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info]  Trusted Core: RA v${ver} started"
+
+    # Load local configuration 
     if [ ! -e $config ]
     then
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Configuration file missing" | tee ${log}
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Configuration file missing"
         exit 1
     else
         source $config
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Configuration file loaded sucessfully, ${config}" | tee ${log}
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Configuration file loaded sucessfully, ${config}"
     fi
 
+    # Validate input file exists
     if [ -f $arg1 ]
     then
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Input file located" | tee ${log}
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Input file located"
     else
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Input file missing" | tee ${log}
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Input file missing"
         exit 1
     fi
 
+    # Check for requirements, exit if not found
     for req in ${reqs[@]}; do 
         is_command ${req}
         if ( $? -eq 1 ); then
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Command ${req} was found" | tee ${log}
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Command ${req} was found"
         else
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Command ${req} was not found, exiting" | tee ${log}
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Command ${req} was not found, exiting"
             exit 1
         fi
     done
@@ -71,13 +93,23 @@ read_input() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed reading input file, ${filesize} bytes, ${arg1}" | tee ${log}
 }
 
-gen_ecdsa() {
+make_outputdir() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Creating directory" | tee ${log}
+}
+
+sign_cert() {}
+
+
+main() {
     
+    start
+    read_input
+
     local counter=0
 
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key and csr for each subject" | tee ${log}
-    for i in $subject
-    do 
+    for i in $subject; do 
+
         local outputdir="${__dir}/output/${i}"
         local csr="${outputdir}/${i}.csr"
         local pkey="${outputdir}/${i}.key"
@@ -85,6 +117,7 @@ gen_ecdsa() {
         local p12="${outputdir}/${i}.p12"
         local pre="-----BEGIN PKCS7-----"
         local post="-----END PKCS7-----"
+
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Creating directory" | tee ${log}
         mkdir ${outputdir}
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Directory created, ${outputdir}" | tee ${log}
@@ -268,8 +301,8 @@ gen_rsa() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating ${counter} key pairs" | tee ${log}
 }
 
-startup
-read_input
+
+
 case ${arg2} in
     
     ecdsa)
