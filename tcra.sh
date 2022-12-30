@@ -88,7 +88,8 @@ start() {
     # Check client certificate extension
     if [[ ${clientcert} == *.p12 ]] || [[ ${clientcert} == *.pfx ]]; then
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Client certificate extension detected as PKCS#12"
-        read password
+        echo "Enter PKCS#12 decryption password : "
+        read -s -p "Enter client certificate decryption password: " p12pw
         cert_type="p12"
     elif [[ ${clientcert} == *.pem ]]; then
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Client certificate extension detected as PEM"
