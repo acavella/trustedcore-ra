@@ -51,6 +51,22 @@ copy_to_run_log() {
     chmod 644 "${log}"
 }
 
+collect_certificate_password() {
+    # Check client certificate extension
+    if [[ ${clientcert} == *.p12 ]] || [[ ${clientcert} == *.pfx ]]; then
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Client certificate extension detected as PKCS#12"
+        echo "Enter PKCS#12 decryption password : "
+        read -s -p "Enter client certificate decryption password: " p12pw
+        cert_type="p12"
+    elif [[ ${clientcert} == *.pem ]]; then
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Client certificate extension detected as PEM"
+        cert_type="pem"
+    else 
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Unsupported file extension, expected .pem, .p12 or .pfx"
+        exit 1
+    fi
+}
+
 start() {
     # Print startup and debug information
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info]  Trusted Core: RA v${ver} started"
@@ -84,20 +100,6 @@ start() {
             exit 1
         fi
     done
-
-    # Check client certificate extension
-    if [[ ${clientcert} == *.p12 ]] || [[ ${clientcert} == *.pfx ]]; then
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Client certificate extension detected as PKCS#12"
-        echo "Enter PKCS#12 decryption password : "
-        read -s -p "Enter client certificate decryption password: " p12pw
-        cert_type="p12"
-    elif [[ ${clientcert} == *.pem ]]; then
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Client certificate extension detected as PEM"
-        cert_type="pem"
-    else 
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Unsupported file extension, expected .pem, .p12 or .pfx"
-        exit 1
-    fi
 }
 
 read_input() {
