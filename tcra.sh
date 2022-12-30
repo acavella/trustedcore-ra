@@ -153,15 +153,12 @@ generate_csr() {
     fi
 }
 
-sign_public_certificate() { }
-
 generate_random_password() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating random password, >112bits"
     randpass=$(openssl rand -base64 14)
     echo "${randpass}" > ${outputdir}/${cn}_pass.txt
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Random password generated"
 }
-
 
 main() {
     
