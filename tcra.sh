@@ -103,71 +103,62 @@ start() {
 }
 
 read_input() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Reading input file to memory, ${arg1}"
     local filesize=$(stat -c %s "${arg1}")
     subject=$(cat ${arg1})
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed reading input file, ${filesize} bytes, ${arg1}"
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Completed reading input file, ${filesize} bytes, ${arg1}\\n"
 }
 
 make_output_directory() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Creating output directory"
     mkdir ${1}
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Directory created, ${1}"
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Created the following directory, ${i}\\n"
 }
 
 generate_private_key() {
     if [[ ${arg2} == "rsa" ]]; then 
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key for ${cn}"
         openssl genrsa -out ${pkey} 4096
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Private key generated, ${pkey}"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Generated RSA private key, ${pkey} with a subject ${cn}\\n"
     elif [[ ${arg2} == "ecdsa" ]]; then
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key for ${cn}"
         openssl ecparam -name secp384r1 -genkey -noout -out "${pkey}"
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Private key generated, ${pkey}"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Generated ECC private key, ${pkey} with a subject ${cn}\\n"
     elif [[ ${arg2} == "ecdh" ]]; then
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key for ${cn}"
         openssl ecparam -name secp384r1 -genkey -noout -out "${pkey}"
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Private key generated, ${pkey}"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Generated ECC private key, ${pkey} with a subject ${cn}\\n"
     else
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Unrecognized argument, ${arg2}, exiting."
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Unrecognized argument, ${arg2}, in second position\\n"
         exit 1
     fi
 }
 
 generate_csr() { 
+    local str="PKCS#10 CSR generated, ${csr}\\n"
     if [[ ${arg2} == "rsa" ]]; then 
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key and csr for ${cn}"
         openssl req -new -key "${pkey}" -nodes -out "${csr}" -sha384 -subj "/CN=${cn}" -config "${__conf}/rsa.cnf"
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Key and CSR generated for, ${cn}"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "${str}"
     elif [[ ${arg2} == "ecdsa" ]]; then
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#10 CSR for ${cn}}"
         openssl req -new -key "${pkey}" -nodes -out "${csr}" -sha384 -subj "/CN=${cn}" -config "${__conf}/ecdsa.cnf"
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#10 CSR generated, ${csr}"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "${str}"
     elif [[ ${arg2} == "ecdh" ]]; then
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#10 CSR for ${cn}"
         openssl req -new -key "${pkey}" -nodes -out "${csr}" -sha384 -subj "/CN=${cn}" -config "${__conf}/ecdh.cnf"
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#10 CSR generated, ${csr}"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "${str}"
     else
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Unrecognized argument, ${arg2}, exiting."
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Unrecognized argument, ${arg2}, exiting.\\n"
         exit 1
     fi
 }
 
 generate_random_password() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating random password, >112bits"
     randpass=$(openssl rand -base64 14)
     echo "${randpass}" > ${outputdir}/${cn}_pass.txt
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Random password generated"
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Random password generated, >112bits entropy\\n"
 }
 
 main() {
     
     start
     read_input
-
     local counter=0
-
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key and csr for each subject"
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Generating private key and csr for each subject\\n"
     for cn in $subject; do 
 
         local outputdir="${__dir}/output/${cn}"
@@ -188,38 +179,36 @@ main() {
 
         if [[ $arg3 == "sign" ]]
         then
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Transmitting request to CA"
+            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Sending PKCS#10 request to RAMI API\\n"
             local p10request=$(sed -e '2,$!d' -e '$d' ${csr} | tr --delete '\n')
             curl ${carsa} --cert ${clientcert} -v -o ${tempout} --cacert ${cacert} --data-urlencode "action=enrollKey" \
             --data-urlencode "ca=${rsaprofile}" --data-urlencode "response.cert.format=1" --data-urlencode "request=${p10request}" --tlsv1.2
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Signed certificate output received from CA"
+
+            # Need logic to validate response
+            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Valid response received from RAMI API\\n"
         
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#7"
             echo -e ${pre} > ${p7b}
             tr --delete '\n' < ${tempout} | sed -n -e 's/^.*base64CertChain=//p'  | sed 's/\r$//' >> ${p7b}
             echo -e ${post} >> ${p7b}
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated"
+            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "PKCS#7 generated from RAMI response\\n"
 
             generate_random_password
 
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#12"
             local result=$(mktemp /tmp/temp.XXXXXXXXX)
             openssl pkcs7 -in ${p7b} -inform DER -out ${result} -print_certs
             openssl pkcs12 -export -inkey ${pkey} -in ${result} -out ${p12} -passout pass:${ranpass}
             rm -f ${result}
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated"
+            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "PKCS#12 generated\\n"
         fi
 
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Cleanup temporary files"
         rm -f ${tempreq}
         rm -f ${tempout}
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed temporary file cleanup"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Temporary files cleaned up\\n"
 
         counter=$(( counter + 1 ))
     done
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating ${counter} key pairs"
     end=$(date +%s)
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Operations completed in $(($end-$start)) seconds..."
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Completed generating ${counter} key pairs in $(($end-$start)) seconds\\n"
 }
 
 make_temporary_log
