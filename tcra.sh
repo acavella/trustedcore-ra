@@ -84,6 +84,19 @@ start() {
             exit 1
         fi
     done
+
+    # Check client certificate extension
+    if [[ ${clientcert} == *.p12 ]] || [[ ${clientcert} == *.pfx ]]; then
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Client certificate extension detected as PKCS#12"
+        read password
+        cert_type="p12"
+    elif [[ ${clientcert} == *.pem ]]; then
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Client certificate extension detected as PEM"
+        cert_type="pem"
+    else 
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Unsupported file extension, expected .pem, .p12 or .pfx"
+        exit 1
+    fi
 }
 
 read_input() {
@@ -141,7 +154,7 @@ sign_public_certificate() { }
 
 generate_random_password() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating random password, >112bits"
-    local randpass=$(openssl rand -base64 14)
+    randpass=$(openssl rand -base64 14)
     echo "${randpass}" > ${outputdir}/${cn}_pass.txt
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Random password generated"
 }
