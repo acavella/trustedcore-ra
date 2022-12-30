@@ -54,7 +54,7 @@ copy_to_run_log() {
 collect_certificate_password() {
     # Check client certificate extension
     if [[ ${clientcert} == *.p12 ]] || [[ ${clientcert} == *.pfx ]]; then
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Client certificate extension detected as PKCS#12"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Client certificate extension detected as PKCS#12\\n"
         echo "Enter PKCS#12 decryption password : "
         read -s -p "Enter client certificate decryption password: " p12pw
         cert_type="p12"
