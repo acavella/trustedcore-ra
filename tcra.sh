@@ -59,34 +59,34 @@ collect_certificate_password() {
         read -s -p "Enter client certificate decryption password: " p12pw
         cert_type="p12"
     elif [[ ${clientcert} == *.pem ]]; then
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Client certificate extension detected as PEM"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Client certificate extension detected as PEM\\n"
         cert_type="pem"
     else 
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Unsupported file extension, expected .pem, .p12 or .pfx"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Unsupported certificate extension, exiting\\n"
         exit 1
     fi
 }
 
 start() {
     # Print startup and debug information
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info]  Trusted Core: RA v${ver} started"
-
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Trusted Core: RA v${ver} started\\n"
+    
     # Load local configuration 
     if [ ! -e $config ]
     then
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Configuration file missing"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Configuration file missing\\n"
         exit 1
     else
         source $config
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Configuration file loaded sucessfully, ${config}"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Configuration file loaded sucessfully, ${config}"
     fi
 
     # Validate input file exists
     if [ -f $arg1 ]
     then
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Input file located"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Input file is valid\\n"
     else
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Input file missing"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Input file not specified or invalid\\n"
         exit 1
     fi
 
@@ -94,9 +94,9 @@ start() {
     for req in ${reqs[@]}; do 
         is_command ${req}
         if ( $? -eq 1 ); then
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Command ${req} was found"
+            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Command ${req} was found\\n"
         else
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Command ${req} was not found, exiting"
+            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Command ${req} was not found, exiting\\n"
             exit 1
         fi
     done
