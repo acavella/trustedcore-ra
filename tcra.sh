@@ -91,9 +91,8 @@ start() {
     fi
 
     # Check for requirements, exit if not found
-    for req in ${reqs[@]}; do 
-        is_command ${req}
-        if ( $? -eq 1 ); then
+    for req in ${reqs[@]}; do
+        if is_command ${req} ; then
             printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Command ${req} was found"
         else
             printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Command ${req} was not found, exiting"
