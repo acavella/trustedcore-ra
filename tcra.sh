@@ -158,6 +158,20 @@ main() {
     start
     read_input
     local counter=0
+
+    if [[ ${arg2} == "ecdsa" ]]; then
+        caprofile=${ecdsaprofile}
+        caurl=${caecc}
+    elif [[ ${arg2} == "ecdh" ]]; then
+        caprofile=${ecdhprofile}
+        caurl=${caecc}
+    elif [[ ${arg2} == "rsa" ]]; then
+        caprofile=${rsaprofile}
+        caurl=${carsa}
+    else
+        exit 1
+    fi
+
     printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Generating private key and csr for each subject\\n"
     for cn in $subject; do 
 
@@ -181,8 +195,8 @@ main() {
         then
             printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Sending PKCS#10 request to RAMI API\\n"
             local p10request=$(sed -e '2,$!d' -e '$d' ${csr} | tr --delete '\n')
-            curl ${carsa} --cert ${clientcert} -v -o ${tempout} --cacert ${cacert} --data-urlencode "action=enrollKey" \
-            --data-urlencode "ca=${rsaprofile}" --data-urlencode "response.cert.format=1" --data-urlencode "request=${p10request}" --tlsv1.2
+            curl ${caurl} --cert ${clientcert} -v -o ${tempout} --cacert ${cacert} --data-urlencode "action=enrollKey" \
+            --data-urlencode "ca=${caprofile}" --data-urlencode "response.cert.format=1" --data-urlencode "request=${p10request}" --tlsv1.2
 
             # Need logic to validate response
             printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Valid response received from RAMI API\\n"
