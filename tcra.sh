@@ -110,7 +110,7 @@ read_input() {
 
 make_output_directory() {
     mkdir ${1}
-    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Created the following directory, ${i}\\n"
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Created the following directory, ${cn}\\n"
 }
 
 generate_private_key() {
