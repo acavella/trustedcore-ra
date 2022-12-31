@@ -33,263 +33,199 @@ is_command() {
     command -v "${check_command}" >/dev/null 2>&1
 }
 
-startup() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info]  Trusted Core: RA v${ver} started" | tee ${log}
-    ## CHECK AND LOAD EXTERNAL CONFIG
+make_temporary_log() {
+    # Create a random temporary file for the log
+    TEMPLOG=$(mktemp /tmp/tcra_temp.XXXXXX)
+    # Open handle 3 for templog
+    # https://stackoverflow.com/questions/18460186/writing-outputs-to-log-file-and-console
+    exec 3>${TEMPLOG}
+    # Delete templog, but allow for addressing via file handle
+    # This lets us write to the log without having a temporary file on the drive, which
+    # is meant to be a security measure so there is not a lingering file on the drive during the install process
+    rm ${TEMPLOG}
+}
+
+copy_to_run_log() {
+    # Copy the contents of file descriptor 3 into the log
+    cat /proc/$$/fd/3 > "${log}"
+    chmod 644 "${log}"
+}
+
+collect_certificate_password() {
+    # Check client certificate extension
+    if [[ ${clientcert} == *.p12 ]] || [[ ${clientcert} == *.pfx ]]; then
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Client certificate extension detected as PKCS#12"
+        echo "Enter PKCS#12 decryption password : "
+        read -s -p "Enter client certificate decryption password: " p12pw
+        cert_type="p12"
+    elif [[ ${clientcert} == *.pem ]]; then
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Client certificate extension detected as PEM"
+        cert_type="pem"
+    else 
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Unsupported certificate extension, exiting"
+        exit 1
+    fi
+}
+
+start() {
+    # Print startup and debug information
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Trusted Core: RA v${ver} started"
+    
+    # Load local configuration 
     if [ ! -e $config ]
     then
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Configuration file missing" | tee ${log}
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Configuration file missing"
         exit 1
     else
         source $config
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Configuration file loaded sucessfully, ${config}" | tee ${log}
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Configuration file loaded sucessfully, ${config}"
     fi
 
+    # Validate input file exists
     if [ -f $arg1 ]
     then
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Input file located" | tee ${log}
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Input file is valid"
     else
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Input file missing" | tee ${log}
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Input file not specified or invalid"
         exit 1
     fi
 
-    for req in ${reqs[@]}; do 
-        is_command ${req}
-        if ( $? -eq 1 ); then
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Command ${req} was found" | tee ${log}
+    # Check for requirements, exit if not found
+    for req in ${reqs[@]}; do
+        if is_command ${req} ; then
+            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Command ${req} was found"
         else
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Command ${req} was not found, exiting" | tee ${log}
+            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Command ${req} was not found, exiting"
             exit 1
         fi
     done
 }
 
-gen_ecdsa() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Reading input file to memory, ${arg1}" | tee ${log}
-    local subject=$(cat ${arg1})
+read_input() {
     local filesize=$(stat -c %s "${arg1}")
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed reading input file, ${filesize} bytes, ${arg1}" | tee ${log}
-    local counter=0
-
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key and csr for each subject" | tee ${log}
-    for i in $subject
-    do 
-        local outputdir="${__dir}/output/${i}"
-        local csr="${outputdir}/${i}.csr"
-        local pkey="${outputdir}/${i}.key"
-        local p7b="${outputdir}/${i}.p7b"
-        local p12="${outputdir}/${i}.p12"
-        local pre="-----BEGIN PKCS7-----"
-        local post="-----END PKCS7-----"
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Creating directory" | tee ${log}
-        mkdir ${outputdir}
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Directory created, ${outputdir}" | tee ${log}
-
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key for ${i}" | tee ${log}
-        openssl ecparam -name secp384r1 -genkey -noout -out ${pkey}
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Private key generated, ${i}.key" | tee ${log}
-
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#10 CSR for ${i}" | tee ${log}
-        openssl req -new -key "${outputdir}/${i}.key" -nodes -out ${csr} -sha384 -subj "/CN=${i}" -config "${__conf}/ecdsa.cnf"
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#10 CSR generated, ${i}.csr" | tee ${log}
-
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating temporary files" | tee ${log}
-        local tempreq=$(mktemp /tmp/temp.XXXXXXXXX)
-        local tempout=$(mktemp /tmp/temp.XXXXXXXXX)
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating temporary files" | tee ${log}
-
-        if [[ $arg3 == "sign" ]]
-        then
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Transmitting request to CA" | tee ${log}
-            local p10request=$(sed -e '2,$!d' -e '$d' ${csr})
-            echo "action=enrollKey&ca=${ecdsaprofile}&request=${p10request}" > ${tempreq}
-            curl ${caecc} --cert ${clientcert} -v -o ${tempout} --cacert ${cacert} --data-binary @${tempreq} --tlsv1.2
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Signed certificate output received from CA" | tee ${log}
-        
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#7" | tee ${log}
-            echo -e ${pre} > ${p7b}
-            tr --delete '\n' < ${tempout} | sed -n -e 's/^.*base64CertChain=//p'  | sed 's/\r$//' >> ${p7b}
-            echo -e ${post} >> ${p7b}
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
-
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating random password, >112bits" | tee ${log}
-            local ranpass=$(openssl rand -base64 14)
-            echo ${ranpass} > ${outputdir}/${i}_pass.txt
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Random password generated" | tee ${log}
-
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#12" | tee ${log}
-            local result=$(mktemp /tmp/temp.XXXXXXXXX)
-            openssl pkcs7 -in ${p7b} -inform DER -out ${result} -print_certs
-            openssl pkcs12 -export -inkey ${pkey} -in ${result} -out ${p12} -passout pass:${ranpass}
-            rm -f ${result}
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
-        fi
-
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Cleanup temporary files" | tee ${log}
-        rm -f ${tempreq}
-        rm -f ${tempout}
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed temporary file cleanup" | tee ${log}
-
-        counter=$(( counter + 1 ))
-    done
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating ${counter} key pairs" | tee ${log}
+    subject=$(cat ${arg1})
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Completed reading input file, ${filesize} bytes, ${arg1}"
 }
 
-gen_ecdh() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Reading input file to memory, ${arg1}" | tee ${log}
-    local subject=$(cat ${arg1})
-    local filesize=$(stat -c %s "${arg1}")
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed reading input file, ${filesize} bytes, ${arg1}" | tee ${log}
-    local counter=0
-
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key and csr for each subject" | tee ${log}
-    for i in $subject
-    do 
-        local outputdir="${__dir}/output/${i}"
-        local csr="${outputdir}/${i}.csr"
-        local pkey="${outputdir}/${i}.key"
-        local p7b="${outputdir}/${i}.p7b"
-        local p12="${outputdir}/${i}.p12"
-        local pre="-----BEGIN PKCS7-----"
-        local post="-----END PKCS7-----"
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Creating directory" | tee ${log}
-        mkdir ${outputdir}
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Directory created, ${outputdir}" | tee ${log}
-
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key for ${i}" | tee ${log}
-        openssl ecparam -name secp384r1 -genkey -noout -out ${pkey}
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Private key generated, ${i}.key" | tee ${log}
-
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#10 CSR for ${i}" | tee ${log}
-        openssl req -new -key "${outputdir}/${i}.key" -nodes -out ${csr} -sha384 -subj "/CN=${i}" -config "${__conf}/ecdh.cnf"
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#10 CSR generated, ${i}.csr" | tee ${log}
-
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating temporary files" | tee ${log}
-        local tempreq=$(mktemp /tmp/temp.XXXXXXXXX)
-        local tempout=$(mktemp /tmp/temp.XXXXXXXXX)
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating temporary files" | tee ${log}
-
-        if [[ $arg3 == "sign" ]]
-        then
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Transmitting request to CA" | tee ${log}
-            local p10request=$(sed -e '2,$!d' -e '$d' ${csr})
-            echo "action=enrollKey&ca=${ecdsaprofile}&request=${p10request}" > ${tempreq}
-            curl ${caecc} --cert ${clientcert} -v -o ${tempout} --cacert ${cacert} --data-binary @${tempreq} --tlsv1.2
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Signed certificate output received from CA" | tee ${log}
-        
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#7" | tee ${log}
-            echo -e ${pre} > ${p7b}
-            tr --delete '\n' < ${tempout} | sed -n -e 's/^.*base64CertChain=//p'  | sed 's/\r$//' >> ${p7b}
-            echo -e ${post} >> ${p7b}
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
-
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating random password, >112bits" | tee ${log}
-            local ranpass=$(openssl rand -base64 14)
-            echo ${ranpass} > ${outputdir}/${i}_pass.txt
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Random password generated" | tee ${log}
-
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#12" | tee ${log}
-            local result=$(mktemp /tmp/temp.XXXXXXXXX)
-            openssl pkcs7 -in ${p7b} -inform DER -out ${result} -print_certs
-            openssl pkcs12 -export -inkey ${pkey} -in ${result} -out ${p12} -passout pass:${ranpass}
-            rm -f ${result}
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
-        fi
-
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Cleanup temporary files" | tee ${log}
-        rm -f ${tempreq}
-        rm -f ${tempout}
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed temporary file cleanup" | tee ${log}
-
-        counter=$(( counter + 1 ))
-    done
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating ${counter} key pairs" | tee ${log}
+make_output_directory() {
+    mkdir ${1}
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Created the following directory, ${cn}"
 }
 
-gen_rsa() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Reading input file to memory, ${arg1}" | tee ${log}
-    local subject=$(cat ${arg1})
-    local filesize=$(stat -c %s "${arg1}")
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed reading input file, ${filesize} bytes, ${arg1}" | tee ${log}
+generate_private_key() {
+    if [[ ${arg2} == "rsa" ]]; then 
+        openssl genrsa -out ${pkey} 4096
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Generated RSA private key, ${pkey} with a subject ${cn}"
+    elif [[ ${arg2} == "ecdsa" ]]; then
+        openssl ecparam -name secp384r1 -genkey -noout -out "${pkey}"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Generated ECC private key, ${pkey} with a subject ${cn}"
+    elif [[ ${arg2} == "ecdh" ]]; then
+        openssl ecparam -name secp384r1 -genkey -noout -out "${pkey}"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Generated ECC private key, ${pkey} with a subject ${cn}"
+    else
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Unrecognized argument, ${arg2}, exiting."
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Unrecognized argument, ${arg2}, in second position"
+        exit 1
+    fi
+}
+
+generate_csr() { 
+    local str="PKCS#10 CSR generated, ${csr}"
+    if [[ ${arg2} == "rsa" ]]; then 
+        openssl req -new -key "${pkey}" -nodes -out "${csr}" -sha384 -subj "/CN=${cn}" -config "${__conf}/rsa.cnf"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "${str}"
+    elif [[ ${arg2} == "ecdsa" ]]; then
+        openssl req -new -key "${pkey}" -nodes -out "${csr}" -sha384 -subj "/CN=${cn}" -config "${__conf}/ecdsa.cnf"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "${str}"
+    elif [[ ${arg2} == "ecdh" ]]; then
+        openssl req -new -key "${pkey}" -nodes -out "${csr}" -sha384 -subj "/CN=${cn}" -config "${__conf}/ecdh.cnf"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "${str}"
+    else
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Unrecognized argument, ${arg2}, exiting."
+        exit 1
+    fi
+}
+
+generate_random_password() {
+    randpass=$(openssl rand -base64 14)
+    echo "${randpass}" > ${outputdir}/${cn}_pass.txt
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Random password generated, >112bits entropy"
+}
+
+main() {
+    
+    start
+    read_input
     local counter=0
 
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key and csr for each subject" | tee ${log}
-    for i in $subject
-    do 
-        local outputdir="${__dir}/output/${i}"
-        local csr="${outputdir}/${i}.csr"
-        local pkey="${outputdir}/${i}.key"
-        local p7b="${outputdir}/${i}.p7b"
-        local p12="${outputdir}/${i}.p12"
-        local pre="-----BEGIN PKCS7-----"
-        local post="-----END PKCS7-----"
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Creating directory" | tee ${log}
-        mkdir ${outputdir}
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Directory created, ${outputdir}" | tee ${log}
+    if [[ ${arg2} == "ecdsa" ]]; then
+        caprofile=${ecdsaprofile}
+        caurl=${caecc}
+    elif [[ ${arg2} == "ecdh" ]]; then
+        caprofile=${ecdhprofile}
+        caurl=${caecc}
+    elif [[ ${arg2} == "rsa" ]]; then
+        caprofile=${rsaprofile}
+        caurl=${carsa}
+    else
+        exit 1
+    fi
 
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating private key and csr for ${i}" | tee ${log}
-        openssl req -new -newkey rsa:4096 -nodes -keyout ${pkey} -out ${csr} -sha384 -subj "/CN=${i}" -config "${__conf}/rsa.cnf"
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Key and CSR generated for, ${i}" | tee ${log}
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Generating private key and csr for each subject"
+    for cn in $subject; do 
 
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating temporary files" | tee ${log}
+        local outputdir="${__dir}/output/${cn}"
+        local csr="${outputdir}/${cn}.csr"
+        local pkey="${outputdir}/${cn}.key"
+        local p7b="${outputdir}/${cn}.p7b"
+        local p12="${outputdir}/${cn}.p12"
         local tempreq=$(mktemp /tmp/temp.XXXXXXXXX)
         local tempout=$(mktemp /tmp/temp.XXXXXXXXX)
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating temporary files" | tee ${log}
+        local pre="-----BEGIN PKCS7-----"
+        local post="-----END PKCS7-----"
+
+        make_output_directory ${outputdir}
+
+        generate_private_key
+
+        generate_csr
 
         if [[ $arg3 == "sign" ]]
         then
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Transmitting request to CA" | tee ${log}
+            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Sending PKCS#10 request to RAMI API"
             local p10request=$(sed -e '2,$!d' -e '$d' ${csr} | tr --delete '\n')
-            curl ${carsa} --cert ${clientcert} -v -o ${tempout} --cacert ${cacert} --data-urlencode "action=enrollKey" --data-urlencode "ca=${rsaprofile}" --data-urlencode "response.cert.format=1" --data-urlencode "request=${p10request}" --tlsv1.2
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Signed certificate output received from CA" | tee ${log}
+            curl ${caurl} --cert ${clientcert} -v -o ${tempout} --cacert ${cacert} --data-urlencode "action=enrollKey" \
+            --data-urlencode "ca=${caprofile}" --data-urlencode "response.cert.format=1" --data-urlencode "request=${p10request}" --tlsv1.2
+
+            # Need logic to validate response
+            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Valid response received from RAMI API"
         
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#7" | tee ${log}
             echo -e ${pre} > ${p7b}
             tr --delete '\n' < ${tempout} | sed -n -e 's/^.*base64CertChain=//p'  | sed 's/\r$//' >> ${p7b}
             echo -e ${post} >> ${p7b}
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
+            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "PKCS#7 generated from RAMI response"
 
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating random password, >112bits" | tee ${log}
-            local ranpass=$(openssl rand -base64 14)
-            echo ${ranpass} > ${outputdir}/${i}_pass.txt
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Random password generated" | tee ${log}
+            generate_random_password
 
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Generating PKCS#12" | tee ${log}
             local result=$(mktemp /tmp/temp.XXXXXXXXX)
             openssl pkcs7 -in ${p7b} -inform DER -out ${result} -print_certs
             openssl pkcs12 -export -inkey ${pkey} -in ${result} -out ${p12} -passout pass:${ranpass}
             rm -f ${result}
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] PKCS#7 file generated" | tee ${log}
+            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "PKCS#12 generated"
         fi
 
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Cleanup temporary files" | tee ${log}
         rm -f ${tempreq}
         rm -f ${tempout}
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed temporary file cleanup" | tee ${log}
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Temporary files cleaned up"
 
         counter=$(( counter + 1 ))
     done
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Completed generating ${counter} key pairs" | tee ${log}
+    end=$(date +%s)
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Completed generating ${counter} key pairs in $(($end-$start)) seconds"
 }
 
-startup
+make_temporary_log
+main | tee -a /proc/$$/fd/3
+copy_to_run_log
 
-if [[ $arg2 == "ecdsa" ]]
-then
-    gen_ecdsa
-fi
-
-if [[ $arg2 == "ecdh" ]]
-then
-    gen_ecdh
-fi
-
-if [[ $arg2 == "rsa" ]]
-then
-    gen_rsa
-fi
-
-
-end=$(date +%s)
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] [info] Operations completed in $(($end-$start)) seconds..." | tee ${log}
 exit 0
