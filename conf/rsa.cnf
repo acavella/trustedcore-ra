@@ -13,6 +13,8 @@ HOME			= .
 default_bits		= 4096
 attributes		= req_attributes
 
+distinguished_name = req_distinguished_name
+
 # Stop confirmation prompts. All information is contained below.
 prompt			= no
 
@@ -24,6 +26,9 @@ string_mask         = nombstr
 
 [ req_attributes ]
 # None. Could put Challenge Passwords, don't want them, leave empty
+
+[ req_distinguished_name ]
+commonName              = VGZLGLQXVP
 
 [ v3_req ]
 
