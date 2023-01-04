@@ -205,14 +205,14 @@ main() {
         
             echo -e ${pre} > ${p7b}
             tr --delete '\n' < ${tempout} | sed -n -e 's/^.*base64CertChain=//p'  | sed 's/\r$//' >> ${p7b}
-            echo -e ${post} >> ${p7b}
+            echo -e "\n${post}" >> ${p7b}
             printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "PKCS#7 generated from RAMI response"
 
             generate_random_password
 
             local result=$(mktemp /tmp/temp.XXXXXXXXX)
-            openssl pkcs7 -in ${p7b} -inform DER -out ${result} -print_certs
-            openssl pkcs12 -export -inkey ${pkey} -in ${result} -out ${p12} -passout pass:${ranpass}
+            openssl pkcs7 -print_certs -in ${p7b} -out ${result}
+            openssl pkcs12 -export -inkey ${pkey} -in ${result} -out ${p12} -passout pass:${randpass}
             rm -f ${result}
             printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "PKCS#12 generated"
         fi
