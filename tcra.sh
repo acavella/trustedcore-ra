@@ -181,6 +181,8 @@ main() {
         local csr="${outputdir}/${cn}.csr"
         local pkey="${outputdir}/${cn}.key"
         local p7b="${outputdir}/${cn}.p7b"
+        local tmp_p12="${outputdir}/${cn}_tmp.p12"
+        local enc_pem="${outputdir}/${cn}_enc.pem"
         local p12="${outputdir}/${cn}.p12"
         local tempreq=$(mktemp /tmp/temp.XXXXXXXXX)
         local tempout=$(mktemp /tmp/temp.XXXXXXXXX)
@@ -212,7 +214,11 @@ main() {
 
             local result=$(mktemp /tmp/temp.XXXXXXXXX)
             openssl pkcs7 -print_certs -in ${p7b} -out ${result}
-            openssl pkcs12 -export -inkey ${pkey} -in ${result} -out ${p12} -passout pass:${randpass}
+            openssl pkcs12 -export -inkey ${pkey} -in ${result} -out ${tmp_p12} -passout pass:${randpass}
+            openssl pkcs12 -in ${tmp_p12} -out ${enc_pem} -passin pass:${randpass} -passout pass:${randpass}
+            openssl pkcs12 -keypbe PBE-SHA1-3DES -certpbe PBE-SHA1-3DES -export -in ${enc_pem} -out ${p12} -name "${cn}-${RANDOM}" -passin pass:${randpass} -passout pass:${randpass}
+            rm -f ${tmp_p12}
+            rm -f ${enc_pem}
             rm -f ${result}
             printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "PKCS#12 generated"
         fi
