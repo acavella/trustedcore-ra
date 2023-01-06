@@ -85,13 +85,24 @@ start() {
 }
 
 main() {
+
+    local targetdir="${__dir}/output/${dtgf}"
+    local p7header="-----BEGIN PKCS7-----"
+    local p7footer="-----END PKCS7-----"
+    local tempout=$(mktemp /tmp/temp.XXXXXXXXX)
+
+    
     start 
     set_profile
 
-    for FILE in ${arg1}*
+    for file in ${arg1}*
     do
-        local filename=$(basename -- "${FILE}")
+        local request=$(sed -e '2,$!d' -e '$d' ${file} | tr --delete '\n')
+        local filename=$(basename -- "${file}")
         cn="${filename%.*}"
+
+        curl ${caurl} --cert ${clientcert} -v -o ${tempout} --cacert ${cacert} --data-urlencode "action=enrollKey" \
+        --data-urlencode "ca=${caprofile}" --data-urlencode "response.cert.format=1" --data-urlencode "request=${request}" --tlsv1.2
 
     done
 
