@@ -5,7 +5,7 @@
 # AUTHOR: Tony Cavella (tony@cavella.com)
 # SOURCE: https://github.com/acavella/trustedcore-ra
 
-## CONFIGURE DEFAULT ENVIRONMENT
+## DEBUG OPTIONS
 set -o errexit
 set -o pipefail
 set -o nounset
@@ -23,8 +23,7 @@ arg1=${1}
 arg2=${2:-default}
 arg3=${3:-default}
 
-# Log start time
-start=$(date +%s)
+
 
 make_temporary_log() {
     # Create a random temporary file for the log
@@ -59,7 +58,29 @@ set_profile() {
     fi
 }
 
+make_output_directory() {
+    mkdir ${1}
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Created the following directory, ${cn}"
+}
+
+build_p7b() {
+    # argument1 is rami response
+    # argument2 is cn
+
+    local p7header="-----BEGIN PKCS7-----"
+    local p7footer="-----END PKCS7-----"
+    local p7b="${targetdir}/${2}.p7b"
+
+    echo -e "${p7header}" > ${p7b}
+    tr --delete '\n' < ${1} | sed -n -e 's/^.*base64CertChain=//p'  | sed 's/\r$//' >> ${p7b}
+    echo -e "\n${p7footer}" >> ${p7b}
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "PKCS#7 generated from RAMI response"
+}
+
 start() {
+    # Log start time
+    start=$(date +%s)
+
     # Print startup and debug information
     printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Trusted Core: RA v${ver} - Sign Certificate"
     
@@ -87,22 +108,25 @@ start() {
 main() {
 
     local targetdir="${__dir}/output/${dtgf}"
-    local p7header="-----BEGIN PKCS7-----"
-    local p7footer="-----END PKCS7-----"
-    local tempout=$(mktemp /tmp/temp.XXXXXXXXX)
 
-    
     start 
     set_profile
+    make_output_directory ${targetdir}
 
     for file in ${arg1}*
     do
         local request=$(sed -e '2,$!d' -e '$d' ${file} | tr --delete '\n')
         local filename=$(basename -- "${file}")
-        cn="${filename%.*}"
-
-        curl ${caurl} --cert ${clientcert} -v -o ${tempout} --cacert ${cacert} --data-urlencode "action=enrollKey" \
+        local cn="${filename%.*}"
+        local tmpout=$(mktemp /tmp/temp.XXXXXXXXX)
+        
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Sending PKCS#10 request to RAMI API"
+        curl ${caurl} --cert ${clientcert} -v -o ${tmpout} --cacert ${cacert} --data-urlencode "action=enrollKey" \
         --data-urlencode "ca=${caprofile}" --data-urlencode "response.cert.format=1" --data-urlencode "request=${request}" --tlsv1.2
+
+        build_p7b ${tmpout} ${cn}
+
+        rm -f ${tmpout}
 
     done
 
