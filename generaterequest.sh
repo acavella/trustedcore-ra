@@ -63,18 +63,41 @@ make_output_directory() {
     printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Created the following directory, ${cn}"
 }
 
-build_p7b() {
-    # argument1 is rami response
-    # argument2 is cn
+generate_private_key() {
+    if [[ ${arg2} == "rsa" ]]; then 
+        openssl genrsa -out ${pkey} 4096
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Generated RSA private key, ${pkey} with a subject ${cn}"
+    elif [[ ${arg2} == "ecdsa" ]]; then
+        openssl ecparam -name secp384r1 -genkey -noout -out "${pkey}"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Generated ECC private key, ${pkey} with a subject ${cn}"
+    elif [[ ${arg2} == "ecdh" ]]; then
+        openssl ecparam -name secp384r1 -genkey -noout -out "${pkey}"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Generated ECC private key, ${pkey} with a subject ${cn}"
+    else
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [error] Unrecognized argument, ${arg2}, exiting."
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Unrecognized argument, ${arg2}, in second position"
+        exit 1
+    fi
+}
 
-    local p7header="-----BEGIN PKCS7-----"
-    local p7footer="-----END PKCS7-----"
-    local p7b="${targetdir}/${2}.p7b"
-
-    echo -e "${p7header}" > ${p7b}
-    tr --delete '\n' < ${1} | sed -n -e 's/^.*base64CertChain=//p'  | sed 's/\r$//' >> ${p7b}
-    echo -e "\n${p7footer}" >> ${p7b}
-    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "PKCS#7 generated from RAMI response"
+generate_csr() { 
+    local str="PKCS#10 CSR generated, ${csr}"
+    if [[ ${arg2} == "rsa" ]]; then 
+        sed -i -E "s/^(commonName[[:blank:]]*=[[:blank:]]*).*/\1${cn}/" ${__conf}/rsa.cnf
+        openssl req -new -key "${pkey}" -nodes -out "${csr}" -sha384 -config "${__conf}/rsa.cnf"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "${str}"
+    elif [[ ${arg2} == "ecdsa" ]]; then
+        sed -i -E "s/^(commonName[[:blank:]]*=[[:blank:]]*).*/\1${cn}/" ${__conf}/ecdsa.cnf
+        openssl req -new -key "${pkey}" -nodes -out "${csr}" -sha384 -config "${__conf}/ecdsa.cnf"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "${str}"
+    elif [[ ${arg2} == "ecdh" ]]; then
+        sed -i -E "s/^(commonName[[:blank:]]*=[[:blank:]]*).*/\1${cn}/" ${__conf}/ecdh.cnf
+        openssl req -new -key "${pkey}" -nodes -out "${csr}" -sha384 -config "${__conf}/ecdh.cnf"
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "${str}"
+    else
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Unrecognized argument, ${arg2}, exiting."
+        exit 1
+    fi
 }
 
 start() {
@@ -117,15 +140,10 @@ main() {
         local request=$(sed -e '2,$!d' -e '$d' ${file} | tr --delete '\n')
         local filename=$(basename -- "${file}")
         local cn="${filename%.*}"
-        local tmpout=$(mktemp /tmp/temp.XXXXXXXXX)
-        
-        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Sending PKCS#10 request to RAMI API"
-        curl ${caurl} --cert ${clientcert} -v -o ${tmpout} --cacert ${cacert} --data-urlencode "action=enrollKey" \
-        --data-urlencode "ca=${caprofile}" --data-urlencode "response.cert.format=1" --data-urlencode "request=${request}" --tlsv1.2
-
-        build_p7b ${tmpout} ${cn}
-
-        rm -f ${tmpout}
+        local pkey="${targetdir}/${cn}.key"
+                
+        generate_private_key
+        generate_csr
 
     done
 
