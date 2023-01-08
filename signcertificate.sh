@@ -11,7 +11,7 @@ set -o pipefail
 set -o nounset
 #set -o xtrace
 
-## VARIABLES
+## GLOBAL VARIABLES
 __dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 __bin="${__dir}/bin"
 __conf="${__dir}/conf"
@@ -27,7 +27,7 @@ arg3=${3:-default}
 
 make_temporary_log() {
     # Create a random temporary file for the log
-    TEMPLOG=$(mktemp /tmp/tcra_temp.XXXXXX)
+    local TEMPLOG=$(mktemp /tmp/tcra_temp.XXXXXX)
     # Open handle 3 for templog
     # https://stackoverflow.com/questions/18460186/writing-outputs-to-log-file-and-console
     exec 3>${TEMPLOG}
@@ -78,8 +78,7 @@ build_p7b() {
 }
 
 start() {
-    # Log start time
-    start=$(date +%s)
+    
 
     # Print startup and debug information
     printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Trusted Core: RA v${ver} - Sign Certificate"
@@ -106,7 +105,7 @@ start() {
 }
 
 main() {
-
+    local start=$(date +%s) # Log start time
     local targetdir="${__dir}/output/${dtgf}"
 
     start 
