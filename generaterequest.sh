@@ -16,6 +16,7 @@ __dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 __bin="${__dir}/bin"
 __conf="${__dir}/conf"
 ver=$(<VERSION)
+dtgf=$(date +%Y-%m-%d_%H%M)
 config="${__conf}""/local.conf"
 log="${__dir}""/log/tcra-""${dtgf}"".log"
 reqs=("openssl" "curl" "sed")
@@ -61,6 +62,12 @@ set_profile() {
 make_output_directory() {
     mkdir ${1}
     printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Created the following directory, ${cn}"
+}
+
+read_input() {
+    local filesize=$(stat -c %s "${arg1}")
+    subject=$(cat ${arg1})
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Completed reading input file, ${filesize} bytes, ${arg1}"
 }
 
 generate_private_key() {
@@ -133,14 +140,13 @@ main() {
 
     start 
     set_profile
+    read_input
     make_output_directory ${targetdir}
 
-    for file in ${arg1}*
+    for cn in $subject; do
     do
-        local request=$(sed -e '2,$!d' -e '$d' ${file} | tr --delete '\n')
-        local filename=$(basename -- "${file}")
-        local cn="${filename%.*}"
         local pkey="${targetdir}/${cn}.key"
+        local csr="${targetdir}/${cn}.csr"
                 
         generate_private_key
         generate_csr
