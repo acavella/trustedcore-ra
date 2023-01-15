@@ -24,7 +24,13 @@ arg1=${1}
 arg2=${2:-default}
 arg3=${3:-default}
 
+is_command() {
+    # Checks to see if the given command (passed as a string argument) exists on the system.
+    # The function returns 0 (success) if the command exists, and 1 if it doesn't.
+    local check_command="$1"
 
+    command -v "${check_command}" >/dev/null 2>&1
+}
 
 make_temporary_log() {
     # Create a random temporary file for the log
@@ -144,7 +150,7 @@ main() {
     make_output_directory ${targetdir}
 
     for cn in $subject; do
-    
+
         local pkey="${targetdir}/${cn}.key"
         local csr="${targetdir}/${cn}.csr"
                 
