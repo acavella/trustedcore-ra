@@ -144,7 +144,7 @@ main() {
     make_output_directory ${targetdir}
 
     for cn in $subject; do
-    do
+    
         local pkey="${targetdir}/${cn}.key"
         local csr="${targetdir}/${cn}.csr"
                 
