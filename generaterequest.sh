@@ -114,8 +114,6 @@ generate_csr() {
 }
 
 start() {
-    
-
     # Print startup and debug information
     printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Trusted Core: RA v${ver} - Generate Request"
     
@@ -158,7 +156,6 @@ main() {
         generate_csr
 
     done
-
 }
 
 make_temporary_log
