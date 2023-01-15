@@ -67,7 +67,7 @@ set_profile() {
 
 make_output_directory() {
     mkdir ${1}
-    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Created the following directory, ${cn}"
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Created the following directory, ${1}"
 }
 
 read_input() {
