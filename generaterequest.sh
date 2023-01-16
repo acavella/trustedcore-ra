@@ -43,6 +43,28 @@ show_ascii() {
 
 }
 
+load_config() {
+    if [ ! -e $config ]
+    then
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Configuration file missing"
+        exit 1
+    else
+        source $config
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Configuration file loaded sucessfully, ${config}"
+    fi
+}
+
+check_reqs() {
+    for req in ${reqs[@]}; do
+        if is_command ${req} ; then
+            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Command ${req} was found"
+        else
+            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Command ${req} was not found, exiting"
+            exit 1
+        fi
+    done
+}
+
 make_temporary_log() {
     # Create a random temporary file for the log
     local TEMPLOG=$(mktemp /tmp/tcra_temp.XXXXXX)
@@ -124,35 +146,13 @@ generate_csr() {
     fi
 }
 
-start() {
-    show_ascii
-    
-    # Load local configuration 
-    if [ ! -e $config ]
-    then
-        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Configuration file missing"
-        exit 1
-    else
-        source $config
-        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Configuration file loaded sucessfully, ${config}"
-    fi
-
-    # Check for requirements, exit if not found
-    for req in ${reqs[@]}; do
-        if is_command ${req} ; then
-            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Command ${req} was found"
-        else
-            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Command ${req} was not found, exiting"
-            exit 1
-        fi
-    done
-}
-
 main() {
     local start=$(date +%s) # Log start time
     local targetdir="${__dir}/output/${dtgf}"
 
-    start 
+    show_ascii
+    load_config
+    check_reqs
     set_profile
     read_input
     make_output_directory ${targetdir}
