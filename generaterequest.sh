@@ -11,12 +11,14 @@ set -o pipefail
 set -o nounset
 #set -o xtrace
 
-## GLOBAL VARIABLES
+## DECLARE VARIABLES
 __dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 __bin="${__dir}/bin"
 __conf="${__dir}/conf"
-ver=$(<VERSION)
 dtgf=$(date +%Y-%m-%d_%H%M)
+
+ver=$(<VERSION)
+
 config="${__conf}""/local.conf"
 log="${__dir}""/log/tcra-""${dtgf}"".log"
 reqs=("openssl" "curl" "sed")
@@ -30,6 +32,15 @@ is_command() {
     local check_command="$1"
 
     command -v "${check_command}" >/dev/null 2>&1
+}
+
+show_ascii() {
+    printf " ______             __         __  _____\n"
+    printf "/_  __/_____ _____ / /____ ___/ / / ___/__  _______\n"
+    printf " / / / __/ // (_-</ __/ -_) _  / / /__/ _ \/ __/ -_)\n"
+    printf "/_/ /_/  \_,_/___/\__/\__/\_,_/  \___/\___/_/  \__/\n"
+    printf "          Trusted Core: RA Version 2.0.0\n\n"
+
 }
 
 make_temporary_log() {
