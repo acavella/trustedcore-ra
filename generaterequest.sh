@@ -39,7 +39,7 @@ show_ascii() {
     printf "/_  __/_____ _____ / /____ ___/ / / ___/__  _______\n"
     printf " / / / __/ // (_-</ __/ -_) _  / / /__/ _ \/ __/ -_)\n"
     printf "/_/ /_/  \_,_/___/\__/\__/\_,_/  \___/\___/_/  \__/\n"
-    printf "          Trusted Core: RA Version 2.0.0\n\n"
+    printf "          Trusted Core: RA Version ${ver}\n\n"
 
 }
 
@@ -125,8 +125,7 @@ generate_csr() {
 }
 
 start() {
-    # Print startup and debug information
-    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Trusted Core: RA v${ver} - Generate Request"
+    show_ascii
     
     # Load local configuration 
     if [ ! -e $config ]
