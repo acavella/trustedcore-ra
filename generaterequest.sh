@@ -65,6 +65,20 @@ check_reqs() {
     done
 }
 
+show_help() {
+    if [[ ${arg1} = "-h" ]] || [[ ${arg1} = "--help" ]]
+    then
+        printf "Trusted Core: RA Version ${ver}\n\n"
+        printf "Usage: vim [arguments] [file ..]       edit specified file(s)\n"
+        printf "or: vim [arguments] -               read text from stdin\n"
+        printf "or: vim [arguments] -t tag          edit file where tag is defined\n"
+        printf "or: vim [arguments] -q [errorfile]  edit file with first error\n\n"
+        printf "Arguments:\n"
+        printf "-v                   Vi mode (like "vi")\n"
+        printf "-e                   Ex mode (like "ex")\n\n"
+        exit 0
+}
+
 make_temporary_log() {
     # Create a random temporary file for the log
     local TEMPLOG=$(mktemp /tmp/tcra_temp.XXXXXX)
