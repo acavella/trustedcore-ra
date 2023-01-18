@@ -167,6 +167,7 @@ main() {
     local start=$(date +%s) # Log start time
     local targetdir="${__dir}/output/${dtgf}"
 
+    show_help
     show_ascii
     load_config
     check_reqs
