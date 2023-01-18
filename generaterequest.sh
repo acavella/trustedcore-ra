@@ -66,17 +66,20 @@ check_reqs() {
 }
 
 show_help() {
-    if [[ ${arg1} = "-h" ]] || [[ ${arg1} = "--help" ]]
+    if [[ ${arg1} = "help" ]]
     then
         printf "Trusted Core: RA Version ${ver}\n\n"
-        printf "Usage: vim [arguments] [file ..]       edit specified file(s)\n"
-        printf "or: vim [arguments] -               read text from stdin\n"
-        printf "or: vim [arguments] -t tag          edit file where tag is defined\n"
-        printf "or: vim [arguments] -q [errorfile]  edit file with first error\n\n"
+        printf "Usage: genreq [inputfile ..] [algorithm]       regular operation\n"
+        printf "or: genreq [arguments]                         help and debug\n\n"
+        printf "Algorithms:\n"
+        printf "ecdsa                   Generate ECDSA P-384 private key and csr\n"
+        printf "ecdh                    Generate ECDH P-384 private key and csr\n"
+        printf "rsa                     Generate RSA 4096 private key and csr\n\n"
         printf "Arguments:\n"
-        printf "-v                   Vi mode (like "vi")\n"
-        printf "-e                   Ex mode (like "ex")\n\n"
+        printf "help                    This help context\n"
+        printf "debug                   Generate debug output\n\n"
         exit 0
+    fi
 }
 
 make_temporary_log() {
