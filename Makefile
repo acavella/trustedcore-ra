@@ -4,10 +4,11 @@ all:
 	@echo Run \'make install\' to install Trusted Core: RA.
 
 install:
-	@mkdir -p $(DESTDIR)$(PREFIX)/bin/
-	@cp -p neofetch $(DESTDIR)$(PREFIX)/bin/neofetch
-	@chmod 755 $(DESTDIR)$(PREFIX)/bin/neofetch
+	@mkdir -p $(HOME)/tcra
+	@cp -r source/* $(HOME)/tcra
+	@chmod 755 genreq
+	@chmod 755 signcert
+	@chmod 755 genp12
 
 uninstall:
-	@rm -rf $(DESTDIR)$(PREFIX)/bin/neofetch
-	@rm -rf $(DESTDIR)$(MANDIR)/man1/neofetch.1*
+	@rm -rf $(HOME)/tcra
