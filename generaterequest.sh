@@ -11,11 +11,14 @@ set -o pipefail
 set -o nounset
 #set -o xtrace
 
-## GLOBAL VARIABLES
+## DECLARE VARIABLES
 __dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 __bin="${__dir}/bin"
 __conf="${__dir}/conf"
+dtgf=$(date +%Y-%m-%d_%H%M)
+
 ver=$(<VERSION)
+
 config="${__conf}""/local.conf"
 log="${__dir}""/log/tcra-""${dtgf}"".log"
 reqs=("openssl" "curl" "sed")
@@ -23,7 +26,61 @@ arg1=${1}
 arg2=${2:-default}
 arg3=${3:-default}
 
+is_command() {
+    # Checks to see if the given command (passed as a string argument) exists on the system.
+    # The function returns 0 (success) if the command exists, and 1 if it doesn't.
+    local check_command="$1"
 
+    command -v "${check_command}" >/dev/null 2>&1
+}
+
+show_ascii() {
+    printf " ______             __         __  _____\n"
+    printf "/_  __/_____ _____ / /____ ___/ / / ___/__  _______\n"
+    printf " / / / __/ // (_-</ __/ -_) _  / / /__/ _ \/ __/ -_)\n"
+    printf "/_/ /_/  \_,_/___/\__/\__/\_,_/  \___/\___/_/  \__/\n"
+    printf "          Trusted Core: RA Version ${ver}\n\n"
+
+}
+
+load_config() {
+    if [ ! -e $config ]
+    then
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Configuration file missing"
+        exit 1
+    else
+        source $config
+        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Configuration file loaded sucessfully, ${config}"
+    fi
+}
+
+check_reqs() {
+    for req in ${reqs[@]}; do
+        if is_command ${req} ; then
+            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Command ${req} was found"
+        else
+            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Command ${req} was not found, exiting"
+            exit 1
+        fi
+    done
+}
+
+show_help() {
+    if [[ ${arg1} = "help" ]]
+    then
+        printf "Trusted Core: RA Version ${ver}\n\n"
+        printf "Usage: genreq [inputfile ..] [algorithm]       regular operation\n"
+        printf "or: genreq [arguments]                         help and debug\n\n"
+        printf "Algorithms:\n"
+        printf "ecdsa                   Generate ECDSA P-384 private key and csr\n"
+        printf "ecdh                    Generate ECDH P-384 private key and csr\n"
+        printf "rsa                     Generate RSA 4096 private key and csr\n\n"
+        printf "Arguments:\n"
+        printf "help                    This help context\n"
+        printf "debug                   Generate debug output\n\n"
+        exit 0
+    fi
+}
 
 make_temporary_log() {
     # Create a random temporary file for the log
@@ -60,7 +117,13 @@ set_profile() {
 
 make_output_directory() {
     mkdir ${1}
-    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Created the following directory, ${cn}"
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Created the following directory, ${1}"
+}
+
+read_input() {
+    local filesize=$(stat -c %s "${arg1}")
+    subject=$(cat ${arg1})
+    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Completed reading input file, ${filesize} bytes, ${arg1}"
 }
 
 generate_private_key() {
@@ -99,53 +162,27 @@ generate_csr() {
     fi
 }
 
-start() {
-    
-
-    # Print startup and debug information
-    printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Trusted Core: RA v${ver} - Generate Request"
-    
-    # Load local configuration 
-    if [ ! -e $config ]
-    then
-        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Configuration file missing"
-        exit 1
-    else
-        source $config
-        printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Configuration file loaded sucessfully, ${config}"
-    fi
-
-    # Check for requirements, exit if not found
-    for req in ${reqs[@]}; do
-        if is_command ${req} ; then
-            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Command ${req} was found"
-        else
-            printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [error] %s\n" $(date +%s) "Command ${req} was not found, exiting"
-            exit 1
-        fi
-    done
-}
-
 main() {
     local start=$(date +%s) # Log start time
     local targetdir="${__dir}/output/${dtgf}"
 
-    start 
+    show_help
+    show_ascii
+    load_config
+    check_reqs
     set_profile
+    read_input
     make_output_directory ${targetdir}
 
-    for file in ${arg1}*
-    do
-        local request=$(sed -e '2,$!d' -e '$d' ${file} | tr --delete '\n')
-        local filename=$(basename -- "${file}")
-        local cn="${filename%.*}"
+    for cn in $subject; do
+
         local pkey="${targetdir}/${cn}.key"
+        local csr="${targetdir}/${cn}.csr"
                 
         generate_private_key
         generate_csr
 
     done
-
 }
 
 make_temporary_log
