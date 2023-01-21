@@ -15,8 +15,10 @@ set -o nounset
 __dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 __bin="${__dir}/bin"
 __conf="${__dir}/conf"
-dtgf=$(date +%Y-%m-%d_%H%M)
 
+dtgf=$(date +%Y-%m-%d_%H%M)
+targetdir="${PWD}/${dtgf}"
+csrdir="${targetdir}/csr"
 ver=$(<VERSION)
 
 config="${__conf}""/local.conf"
@@ -115,7 +117,7 @@ set_profile() {
     fi
 }
 
-make_output_directory() {
+make_directory() {
     mkdir ${1}
     printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Created the following directory, ${1}"
 }
@@ -163,8 +165,7 @@ generate_csr() {
 }
 
 main() {
-    local start=$(date +%s) # Log start time
-    local targetdir="${__dir}/output/${dtgf}"
+    local start=$(date +%s) # Log start time 
 
     show_help
     show_ascii
@@ -172,12 +173,13 @@ main() {
     check_reqs
     set_profile
     read_input
-    make_output_directory ${targetdir}
+    make_directory ${targetdir}
+    make_directory ${csrdir}
 
     for cn in $subject; do
 
         local pkey="${targetdir}/${cn}.key"
-        local csr="${targetdir}/${cn}.csr"
+        local csr="${csrdir}/${cn}.csr"
                 
         generate_private_key
         generate_csr
