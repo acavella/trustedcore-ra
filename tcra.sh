@@ -216,7 +216,9 @@ main() {
             openssl pkcs7 -print_certs -in ${p7b} -out ${result}
             openssl pkcs12 -export -inkey ${pkey} -in ${result} -out ${tmp_p12} -passout pass:${randpass}
             openssl pkcs12 -in ${tmp_p12} -out ${enc_pem} -passin pass:${randpass} -passout pass:${randpass}
-            openssl pkcs12 -keypbe PBE-SHA1-3DES -certpbe PBE-SHA1-3DES -macalg SHA1 -iter 2000 -export -in ${enc_pem} -out ${p12} -name "${cn}-${RANDOM}" -passin pass:${randpass} -passout pass:${randpass}
+            openssl pkcs12 -keypbe PBE-SHA1-3DES -certpbe PBE-SHA1-3DES -macalg SHA1 \
+                    -export -in ${enc_pem} -out ${p12} -name "${cn}-${RANDOM}" \
+                    -passin pass:${randpass} -passout pass:${randpass}
             rm -f ${tmp_p12}
             rm -f ${enc_pem}
             rm -f ${result}
