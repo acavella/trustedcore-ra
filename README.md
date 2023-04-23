@@ -7,6 +7,7 @@ A custom registration authority client to be used with the ISC CertAgent RAMI AP
 - Bash
 - OpenSSL
 - Curl
+- Zenity 3.28+
 
 ### Certificate Authority / Server
 - ISC CertAgent 7.0.9.x
