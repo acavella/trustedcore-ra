@@ -27,7 +27,7 @@ arg3=${3:-}
 
 make_temporary_log() {
     # Create a random temporary file for the log
-    TEMPLOG=$(mktemp /tmp/tcra_temp.XXXXXX)
+    TEMPLOG=$(mktemp /tmp/raclient_temp.XXXXXX)
     # Open handle 3 for templog
     # https://stackoverflow.com/questions/18460186/writing-outputs-to-log-file-and-console
     exec 3>${TEMPLOG}
