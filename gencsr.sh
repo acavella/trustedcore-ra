@@ -1,4 +1,4 @@
-dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd#!/usr/bin/env bash
+#!/usr/bin/env bash
 
 # NAME: raclient.sh
 # DECRIPTION: Custom regsitration authority client used with ISC RAMI API
