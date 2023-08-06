@@ -89,16 +89,21 @@ main() {
 
     read_input
     local counter=0
+    local pid=$RANDOM
+    local outputdir="${__dir}/output/${pid}"
+    local csrdir="${outputdir}/csr"
+    local pkeydir="${outputdir}/key"
+
+    make_output_directory ${outputdir}
+    make_output_directory ${csrdir}
+    make_output_directory ${pkeydir}
 
     if [[ ${arg2} == "ecdsa" ]]; then
         caprofile=${ecdsaprofile}
-        caurl=${caecc}
     elif [[ ${arg2} == "ecdh" ]]; then
         caprofile=${ecdhprofile}
-        caurl=${caecc}
     elif [[ ${arg2} == "rsa" ]]; then
         caprofile=${rsaprofile}
-        caurl=${carsa}
     else
         exit 1
     fi
@@ -109,19 +114,12 @@ main() {
         local outputdir="${__dir}/output/${cn}"
         local csr="${outputdir}/${cn}.csr"
         local pkey="${outputdir}/${cn}.key"
-        local p7b="${outputdir}/${cn}.p7b"
-        local p12="${outputdir}/${cn}.p12"
-        local tempreq=$(mktemp /tmp/temp.XXXXXXXXX)
-        local tempout=$(mktemp /tmp/temp.XXXXXXXXX)
-        local pre="-----BEGIN PKCS7-----"
-        local post="-----END PKCS7-----"
-
-        make_output_directory ${outputdir}
 
         generate_private_key
 
         generate_csr
 
+    done
 }
 
 make_temporary_log
