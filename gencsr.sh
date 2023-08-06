@@ -111,9 +111,8 @@ main() {
     printf "%(%Y-%m-%dT%H:%M:%SZ)T $$ [info] %s\n" $(date +%s) "Generating private key and csr for each subject"
     for cn in $subject; do 
 
-        local outputdir="${__dir}/output/${cn}"
-        local csr="${outputdir}/${cn}.csr"
-        local pkey="${outputdir}/${cn}.key"
+        local csr="${csrdir}/${cn}.csr"
+        local pkey="${pkeydir}/${cn}.key"
 
         generate_private_key
 
